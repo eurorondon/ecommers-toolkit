@@ -9,16 +9,16 @@ const initialState = {
   page: "",
 };
 
-export const producstSlice = createSlice({
+export const productsSlice = createSlice({
   name: "products",
-
   initialState,
-
   reducers: {
     setProducts: (state, action) => {
       state.productList = action.payload.products;
       state.pages = action.payload.pages;
-      state.page = action.payload.page;
+    },
+    setPage: (state, action) => {
+      state.page = action.payload;
     },
     setLoading: (state, action) => {
       state.isLoading = action.payload;
@@ -30,5 +30,6 @@ export const producstSlice = createSlice({
   },
 });
 
-export const { setProducts, setLoading, setError } = producstSlice.actions;
-export default producstSlice.reducer;
+export const { setProducts, setPage, setLoading, setError } =
+  productsSlice.actions;
+export default productsSlice.reducer;

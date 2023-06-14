@@ -15,8 +15,8 @@ const GridProductList = () => {
         gap: "",
       }}
     >
-      {productList.map((product) => (
-        <div>
+      {productList?.map((product) => (
+        <div key={product._id}>
           <Product
             url={product.photo[0].url}
             name={product.name}
