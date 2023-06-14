@@ -1,17 +1,13 @@
 import React from "react";
 
 const Product = (props) => {
-  const MAX_TITLE_LENGTH = 17;
+  // const MAX_TITLE_LENGTH = 17;
   const MAX_DESCRIPTION_LENGTH = 40;
 
   return (
-    <div className="bg-white  rounded-md  mb-8 md:mb-0 md:mr-4 md:last:mr-0">
+    <div className="bg-white  rounded-md  md:mb-0 md:mr-4 md:last:mr-0">
       <div className="mx-auto">
-        <img
-          className="w-50 md:w-40 mx-auto"
-          src={props.url}
-          alt="product image"
-        />
+        <img className="w-50 md:w-40 mx-auto" src={props.url} alt="product " />
       </div>
 
       <div className="p-1">
