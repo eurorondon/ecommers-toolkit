@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getProudcts } from "../../api/productsApi";
 import {
   setProducts,
@@ -11,7 +11,6 @@ import GridProductList from "./GridProductList";
 
 const ShopSections = () => {
   const dispatch = useDispatch();
-  const productsList = useSelector((state) => state.products);
 
   // Ejecutamos la llamada a la api , reactquery nos ayuda con el estado de la peticion
   const { isLoading, data, isError, error } = useQuery({
@@ -34,7 +33,7 @@ const ShopSections = () => {
   else if (isError) return <div>Error:{error.message}</div>;
 
   return (
-    <div>
+    <div className="  bg-slate-400 ">
       <GridProductList />
     </div>
   );

@@ -8,10 +8,11 @@ const GridProductList = () => {
 
   return (
     <div
+      className=" mx-5 xl:mx-48 lg:mx-20 md:mx-20 py-20 grid grid-cols-2  sm:grid-cols-4 lg:grid-cols-5  gap-5"
       style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(5, 1fr)",
-        gap: "10px",
+        display: "",
+        gridTemplateColumns: "",
+        gap: "",
       }}
     >
       {productList.map((product) => (
