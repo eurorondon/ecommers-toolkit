@@ -734,7 +734,7 @@ textarea:focus {
 .carousel-root .carousel-arrow-right {
   right: 10px; /* Ajusta la posición derecha de la flecha derecha */
 }
-button.rec-dot {
+/* button.rec-dot {
   width: 6px;
   height: 6px;
-}
+} */
