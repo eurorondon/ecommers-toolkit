@@ -6,6 +6,7 @@ body {
   padding: 0;
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
+  background-color: #d8eaf2;
 }
 
 /* shop section */
@@ -705,4 +706,35 @@ textarea:focus {
 .page-item.active .page-link {
   background-color: black;
   border: 1px solid black;
+}
+
+.carousel-root {
+  position: relative;
+}
+
+.carousel-root .carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30px; /* Ajusta el ancho de la flecha según tus necesidades */
+  height: 30px; /* Ajusta la altura de la flecha según tus necesidades */
+  background-color: #000; /* Cambia el color de fondo de la flecha */
+  color: #fff; /* Cambia el color del texto de la flecha */
+  font-size: 18px; /* Ajusta el tamaño de fuente del texto de la flecha */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.carousel-root .carousel-arrow-left {
+  left: 10px; /* Ajusta la posición izquierda de la flecha izquierda */
+}
+
+.carousel-root .carousel-arrow-right {
+  right: 10px; /* Ajusta la posición derecha de la flecha derecha */
+}
+button.rec-dot {
+  width: 6px;
+  height: 6px;
 }

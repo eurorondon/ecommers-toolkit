@@ -33,7 +33,7 @@ const Header = () => {
         </div>
       </div>
       {/* Header */}
-      <div className="header">
+      <div className="header pb-5" style={{ backgroundColor: "#040915" }}>
         <div className="container">
           {/* MOBILE HEADER */}
           <div className="mobile-header">
