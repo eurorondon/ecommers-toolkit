@@ -1,26 +1,22 @@
 import { useSelector } from "react-redux";
 import Product from "./ProductGrid";
+import { Link } from "react-router-dom";
 
 const GridProductList = () => {
   const { productList } = useSelector((state) => state.products);
 
   return (
-    <div
-      className=" mx-5 xl:mx-48 lg:mx-20 md:mx-20 py-5 grid grid-cols-2  sm:grid-cols-4 lg:grid-cols-5  gap-5"
-      style={{
-        display: "",
-        gridTemplateColumns: "",
-        gap: "",
-      }}
-    >
+    <div className=" grid mx-auto ">
       {productList?.map((product) => (
         <div key={product._id}>
-          <Product
-            url={product.photo[0].url}
-            name={product.name}
-            description={product.description}
-            price={product.price}
-          />
+          <Link to={`/products/${product._id}`}>
+            <Product
+              url={product.photo[0].url}
+              name={product.name}
+              description={product.description}
+              price={product.price}
+            />
+          </Link>
         </div>
       ))}
     </div>

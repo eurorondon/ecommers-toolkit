@@ -6,6 +6,10 @@ const productsApi = axios.create({
 
 export const getProudcts = async (page) => {
   const res = await productsApi.get(`api/products?pageNumber=${page}`);
-  console.log(page);
+  return res.data;
+};
+
+export const getProudct = async (id) => {
+  const res = await productsApi.get(`api/products/${id}`);
   return res.data;
 };

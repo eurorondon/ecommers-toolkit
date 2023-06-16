@@ -1,35 +1,38 @@
-import React from "react";
-
-const Product = (props) => {
-  // const MAX_TITLE_LENGTH = 17;
-  const MAX_DESCRIPTION_LENGTH = 40;
+export default function Product(props) {
+  const MAX_TITLE_LENGTH = 17; // El número máximo de caracteres permitidos en el título
+  const MAX_DESCRIPTION_LENGTH = 40; // El número máximo de caracteres permitidos en la descripción\
 
   return (
-    <div className="bg-white  rounded-md  md:mb-0 md:mr-4 md:last:mr-0">
-      <div className="mx-auto">
-        <img className="w-50 md:w-40 mx-auto" src={props.url} alt="product " />
+    <div className=" card  text-start  ">
+      <div className="mx-auto" style={{ maxWidth: "14rem" }}>
+        <img className="img-fluid" src={props.url} alt="product image" />
       </div>
 
-      <div className="p-1">
-        <h5 className="font-bold text-blue-900 text-sm 2xl:text-lg truncate">
+      <div className="p-2" style={{ backgroundColor: "" }}>
+        <h5 className="name" style={{ fontWeight: "bold", color: "#00789D" }}>
           {props.name}
         </h5>
-        <div className="">
+        <div
+          className=""
+          // style={
+          //   window.innerWidth > 767 ? { height: "50px" } : { height: "40px" }
+          // }
+        >
           {props.description ? (
-            <p className="text-sm description">
+            <p className="description">
               {props.description.length > MAX_DESCRIPTION_LENGTH
                 ? props.description.substring(0, MAX_DESCRIPTION_LENGTH) + "..."
                 : props.description}
             </p>
           ) : (
-            <p className="text-sm">Sin Descripción</p>
+            <p className="description"> Sin Descripcion</p>
           )}
         </div>
 
-        <p className="text-base ">{props.price} $</p>
+        <p className="price" style={{ fontWeight: "" }}>
+          {props.price} $
+        </p>
       </div>
     </div>
   );
-};
-
-export default Product;
+}
