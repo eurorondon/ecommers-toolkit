@@ -4,11 +4,11 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { ButtonBase } from "@mui/material";
 import { ArrowLeft, ArrowRight } from "@mui/icons-material";
-import Product from "../homeComponents/ShopSection/ProductGrid";
+import Product from "../NewProducts/Product";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-const CustomArrows = () => {
+const NewProducts = () => {
   const { productList } = useSelector((state) => state.products);
   const sliderRef = useRef(null);
 
@@ -34,7 +34,7 @@ const CustomArrows = () => {
   const settings = {
     dots: true,
     arrows: false,
-    infinite: true,
+    infinite: false,
     slidesToShow: 3,
     slidesToScroll: 1,
     responsive: [
@@ -81,7 +81,7 @@ const CustomArrows = () => {
     : null;
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto my-4">
       <h2>Lo más Nuevo</h2>
       <div
         className=""
@@ -90,9 +90,9 @@ const CustomArrows = () => {
         <Slider {...settings} ref={sliderRef}>
           {products}
         </Slider>
-
         {renderArrows()}
       </div>
+
       <style jsx>{`
         .slider-arrow {
           position: absolute;
@@ -103,27 +103,23 @@ const CustomArrows = () => {
           left: 0;
           right: 0;
           background-color: black;
+          display: none;
         }
-
         .arrow-btn {
           font-size: 2rem;
           position: absolute;
         }
-
         .prev {
           left: -50px;
         }
-
         .next {
           right: -50px;
         }
-
         .slick-dots li {
           margin: 0;
           width: 15px;
           height: 15px;
         }
-
         .slick-active {
           margin: 0;
         }
@@ -132,4 +128,4 @@ const CustomArrows = () => {
   );
 };
 
-export default CustomArrows;
+export default NewProducts;
