@@ -34,7 +34,7 @@ const NewProducts = () => {
   const settings = {
     dots: true,
     arrows: false,
-    infinite: false,
+    // infinite: false,
     slidesToShow: 3,
     slidesToScroll: 1,
     responsive: [
@@ -49,19 +49,21 @@ const NewProducts = () => {
         breakpoint: 1024,
         settings: {
           slidesToShow: 4,
+          slidesToScroll: 2,
         },
       },
       {
         breakpoint: 800,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: 3,
+          slidesToScroll: 3,
         },
       },
       {
         breakpoint: 464,
         settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
+          slidesToShow: 2,
+          slidesToScroll: 2,
         },
       },
     ],
@@ -93,7 +95,7 @@ const NewProducts = () => {
         {renderArrows()}
       </div>
 
-      <style jsx>{`
+      <style>{`
         .slider-arrow {
           position: absolute;
           top: 50%;

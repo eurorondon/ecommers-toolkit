@@ -1,9 +1,12 @@
 export default function Product(props) {
   const MAX_TITLE_LENGTH = 17; // El número máximo de caracteres permitidos en el título
-  const MAX_DESCRIPTION_LENGTH = 40; // El número máximo de caracteres permitidos en la descripción\
+  const MAX_DESCRIPTION_LENGTH = 40; // El número máximo de caracteres permitidos en la descripción
 
   return (
-    <div className=" card  text-start " style={{ border: "none" }}>
+    <div
+      className="card text-start"
+      style={{ border: "none", borderRadius: "0" }}
+    >
       <div className="mx-auto" style={{ maxWidth: "14rem" }}>
         <img className="img-fluid" src={props.url} alt="product image" />
       </div>
@@ -12,12 +15,7 @@ export default function Product(props) {
         <h5 className="name" style={{ fontWeight: "bold", color: "#00789D" }}>
           {props.name}
         </h5>
-        <div
-          className=""
-          // style={
-          //   window.innerWidth > 767 ? { height: "50px" } : { height: "40px" }
-          // }
-        >
+        <div>
           {props.description ? (
             <p className="description">
               {props.description.length > MAX_DESCRIPTION_LENGTH
@@ -25,7 +23,7 @@ export default function Product(props) {
                 : props.description}
             </p>
           ) : (
-            <p className="description"> Sin Descripcion</p>
+            <p className="description">Sin Descripcion</p>
           )}
         </div>
 

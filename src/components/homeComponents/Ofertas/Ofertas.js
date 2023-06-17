@@ -4,7 +4,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { ButtonBase } from "@mui/material";
 import { ArrowLeft, ArrowRight } from "@mui/icons-material";
-import Product from "../Destacados/ProductDestacados";
+import Product from "../Ofertas/ProductOfertas";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -34,7 +34,7 @@ const Ofertas = () => {
   const settings = {
     dots: true,
     arrows: false,
-    infinite: false,
+    // infinite: false,
     slidesToShow: 3,
     slidesToScroll: 1,
     responsive: [
@@ -49,12 +49,14 @@ const Ofertas = () => {
         breakpoint: 1024,
         settings: {
           slidesToShow: 4,
+          slidesToScroll: 2,
         },
       },
       {
         breakpoint: 800,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: 3,
+          slidesToScroll: 3,
         },
       },
       {
@@ -93,7 +95,7 @@ const Ofertas = () => {
         {renderArrows()}
       </div>
 
-      <style jsx>{`
+      <style>{`
         .slider-arrow {
           position: absolute;
           top: 50%;

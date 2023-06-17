@@ -2,7 +2,10 @@ import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { getProudcts } from "../../../api/productsApi";
-import { setProducts } from "../../../features/products/productsSlice";
+import {
+  setLoading,
+  setProducts,
+} from "../../../features/products/productsSlice";
 import GridProductList from "./GridProductList";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { setPage } from "../../../features/products/productsSlice";
@@ -18,14 +21,15 @@ const ShopSections = () => {
     ["products", page], // Incluir el parámetro 'page' en el array de dependencias de la queryKey
     () => getProudcts(page) // Pasar una función anónima que invoque getProudcts con el parámetro page
   );
-  console.log(data);
 
   // enviamos los datos extraídos de la API a REDUX
   useEffect(() => {
     if (data) {
       dispatch(setProducts(data));
     }
-  }, [data, dispatch]);
+
+    dispatch(setLoading(isLoading));
+  }, [data, isLoading, dispatch]);
 
   useEffect(() => {
     dispatch(setPage(currentPage));

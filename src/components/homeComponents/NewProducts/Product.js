@@ -3,7 +3,7 @@ export default function Product(props) {
   const MAX_DESCRIPTION_LENGTH = 40; // El número máximo de caracteres permitidos en la descripción\
 
   return (
-    <div className=" card  text-start mx-1 " style={{ borderRadius: "15px" }}>
+    <div className=" card  text-start mx-1 " style={{ borderRadius: "10px" }}>
       <div className="mx-auto" style={{ maxWidth: "14rem" }}>
         <img className="img-fluid" src={props.url} alt="product image" />
       </div>
