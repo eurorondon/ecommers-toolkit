@@ -6,6 +6,7 @@ import NewProducts from "../components/homeComponents/NewProducts/NewProducts";
 import Destacados from "../components/homeComponents/Destacados/Destacados";
 import Ofertas from "../components/homeComponents/Ofertas/Ofertas";
 import { useSelector } from "react-redux";
+import Portada from "../components/homeComponents/Portada";
 
 // import GridProductList from "../components/homeComponents/GridProductList";
 
@@ -15,6 +16,7 @@ const Home = () => {
   return (
     <div className="bg-neutral-100">
       <Header />
+      <Portada />
       <Categorias />
       {isLoading ? null : (
         <>
