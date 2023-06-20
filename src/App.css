@@ -175,6 +175,11 @@ textarea:focus {
   display: none;
 }
 
+.menu-item:hover {
+  background-color: #1cb803 !important;
+  color: white;
+}
+
 /* SHOP */
 .section {
   width: 100%;
@@ -743,7 +748,12 @@ textarea:focus {
   height: 6px;
 } */
 
-.menu-item:hover {
-  background-color: #1cb803 !important;
-  color: white;
+.whatsapp {
+  max-width: 5rem;
+  position: fixed;
+  bottom: 20px;
+  right: 5px;
+  /* border: none; */
+  /* background: none;   */
+  z-index: 5;
 }

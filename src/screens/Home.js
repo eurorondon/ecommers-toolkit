@@ -7,6 +7,7 @@ import Destacados from "../components/homeComponents/Destacados/Destacados";
 import Ofertas from "../components/homeComponents/Ofertas/Ofertas";
 import { useSelector } from "react-redux";
 import Portada from "../components/homeComponents/Portada";
+import Whatsapp from "../components/homeComponents/Whatsapp";
 
 // import GridProductList from "../components/homeComponents/GridProductList";
 
@@ -26,6 +27,7 @@ const Home = () => {
         </>
       )}
       <ShopSections />
+      <Whatsapp />
     </div>
   );
 };

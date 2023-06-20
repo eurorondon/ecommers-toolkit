@@ -27,9 +27,9 @@ const Header = () => {
             {window.innerWidth < 768 ? (
               <p
                 className="text-white text-center"
-                style={{ fontSize: "1rem" }}
+                style={{ fontSize: "0.7rem" }}
               >
-                <LocationOn />
+                <LocationOn style={{ fontSize: "0.9rem" }} />
                 Barquisimeto- Edo, Lara
               </p>
             ) : (
@@ -53,7 +53,7 @@ const Header = () => {
       >
         <div className="container">
           {/* MOBILE HEADER */}
-          <div className="mobile-header pb-3">
+          <div className="mobile-header pb-2">
             <div className="container ">
               <div className="row ">
                 <div className="col-6 d-flex align-items-center">

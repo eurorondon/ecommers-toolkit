@@ -55,6 +55,7 @@ const Categorias = () => {
   if (window.innerWidth > 1150)
     return (
       <div
+        className="my-5"
         style={{
           display: "flex",
           justifyContent: "center",

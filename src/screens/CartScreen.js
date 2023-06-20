@@ -19,11 +19,11 @@ const CartScreen = () => {
   console.log(data);
 
   // enviamos los datos extraídos de la API a REDUX
-  // useEffect(() => {
-  //   if (data) {
-  //     dispatch(addToCart(data));
-  //   }
-  // }, [data, dispatch]);
+  useEffect(() => {
+    if (data) {
+      dispatch(addToCart(data));
+    }
+  }, []);
 
   return (
     <>
