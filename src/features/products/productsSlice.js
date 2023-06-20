@@ -2,9 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   productList: [],
-  // isLoading: null,
+  isLoading: true,
   pages: "",
-  page: "",
+  page: 0,
   productDetails: [],
 };
 

@@ -22,18 +22,19 @@ const ShopSections = () => {
     () => getProudcts(page) // Pasar una función anónima que invoque getProudcts con el parámetro page
   );
 
+  useEffect(() => {
+    if (currentPage > 0) {
+      dispatch(setPage(currentPage));
+    }
+  }, [dispatch, currentPage]);
+
   // enviamos los datos extraídos de la API a REDUX
   useEffect(() => {
-    if (data) {
+    if (data && !isLoading) {
       dispatch(setProducts(data));
     }
-
     dispatch(setLoading(isLoading));
   }, [data, isLoading, dispatch]);
-
-  useEffect(() => {
-    dispatch(setPage(currentPage));
-  }, [dispatch, currentPage]);
 
   if (!productList.length > 0) return <Loading />;
 

@@ -6,11 +6,15 @@ const cartSlice = createSlice({
     cartItems: [],
   },
   reducers: {
-    addToCart(state, action) {
-      const item = action.payload;
-      state.cartItems.push(item);
+    addToCart: (state, action) => {
+      const newItem = action.payload;
+      const existingItemIndex = state.cartItems.findIndex(
+        (item) => item.data._id === newItem.data._id
+      );
+      if (existingItemIndex === -1) {
+        state.cartItems.push(newItem);
+      }
     },
-    // Resto de las acciones del slice
   },
 });
 

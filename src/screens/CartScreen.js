@@ -1,12 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./../components/Header";
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getProudct } from "../api/productsApi";
 import { addToCart } from "../features/cart/cartSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const CartScreen = () => {
+  const { cartItems } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const { id } = useParams();
   const [searchParams] = useSearchParams();
@@ -16,18 +17,19 @@ const CartScreen = () => {
   const { isLoading, data, isError, error } = useQuery(["product", id], () =>
     getProudct(id)
   );
-  console.log(data);
 
-  // enviamos los datos extraídos de la API a REDUX
+  // console.log(data._id);
+
   useEffect(() => {
     if (data) {
-      dispatch(addToCart(data));
+      dispatch(addToCart({ data, qty }));
     }
-  }, []);
+  }, [data]);
 
   return (
     <>
       <Header />
+      <pre>{JSON.stringify(data)}</pre>
       {/* Cart */}
       <div className="container">
         {/* <div className=" alert alert-info text-center mt-3">
