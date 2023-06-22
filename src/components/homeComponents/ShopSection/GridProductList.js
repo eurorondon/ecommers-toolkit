@@ -20,17 +20,13 @@ const GridProductList = () => {
       }
     );
 
-  console.log(hasNextPage);
+  // const productList =
+  //   data?.pages.reduce(
+  //     (prevProducts, page) => prevProducts.concat(page.products),
+  //     []
+  //   ) ?? [];
 
-  const productList =
-    data?.pages.reduce(
-      (prevProducts, page) => prevProducts.concat(page.products),
-      []
-    ) ?? [];
-
-  // const productList = data?.pages[0].products ?? [];
-
-  console.log(productList);
+  const productList = data?.pages.flatMap((page) => page.products) ?? [];
 
   if (error) {
     console.log(error);
@@ -51,7 +47,7 @@ const GridProductList = () => {
     >
       <div className=" grid mx-auto ">
         {productList?.map((product) => (
-          <div>
+          <div key={product._id}>
             <Link to={`/products/${product._id}`}>
               <Product
                 url={product.photo[0].url}

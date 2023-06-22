@@ -39,16 +39,21 @@ const SingleProduct = ({ match }) => {
 
   if (isLoading) return <Loading />;
 
+  const handleGoBack = () => {
+    navigate(-1);
+  };
+
   const product = data;
   if (product)
     return (
       <>
         <Header />
+        <button onClick={handleGoBack}>Volver</button>
         <div className="container single-product">
           <div className="row">
             <div className="col-md-6">
               <div className="single-image">
-                <img src={product.image[0]} alt={product.name} />
+                <img src={product?.photo[0].url} alt={product.name} />
               </div>
             </div>
             <div className="col-md-6">

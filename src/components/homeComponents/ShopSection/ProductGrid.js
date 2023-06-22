@@ -4,8 +4,20 @@ export default function Product(props) {
 
   return (
     <div className=" card  text-start  ">
-      <div className="mx-auto" style={{ maxWidth: "14rem" }}>
-        <img className="img-fluid" src={props.url} alt="product image" />
+      <div
+        className="mx-auto d-flex justify-content-center align-items-center"
+        style={{ maxWidth: "14rem" }}
+      >
+        <img
+          className="mx-auto"
+          src={props.url}
+          alt="product image"
+          style={{
+            width: "95%",
+            height: "200px",
+            objectFit: "scale-down",
+          }}
+        />
       </div>
 
       <div className="p-2" style={{ backgroundColor: "" }}>

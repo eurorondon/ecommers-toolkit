@@ -1,11 +1,10 @@
 import axios from "axios";
 
 const productsApi = axios.create({
-  baseURL: "https://apirest.larahogarplastic.com",
+  baseURL: process.env.REACT_APP_SERVER_URL,
 });
 
 export const getProducts = async (path) => {
-  console.log(path);
   const res = await productsApi.get(path);
   return res.data;
 };
