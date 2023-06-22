@@ -1,25 +1,69 @@
-import { useSelector } from "react-redux";
 import Product from "./ProductGrid";
 import { Link } from "react-router-dom";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { getProducts } from "../../../api/productsApi";
+import Loading from "../../Loading";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const GridProductList = () => {
-  const { productList } = useSelector((state) => state.products);
+  const { data, isLoading, error, hasNextPage, fetchNextPage } =
+    useInfiniteQuery(
+      ["infinity-products"],
+      ({ pageParam = 0 }) =>
+        getProducts(`/api/products?pageNumber=${pageParam}`),
+
+      {
+        getNextPageParam: (lastPage) => {
+          if (lastPage.page === lastPage.pages) return false;
+          return lastPage.page + 1;
+        },
+      }
+    );
+
+  console.log(hasNextPage);
+
+  const productList =
+    data?.pages.reduce(
+      (prevProducts, page) => prevProducts.concat(page.products),
+      []
+    ) ?? [];
+
+  // const productList = data?.pages[0].products ?? [];
+
+  console.log(productList);
+
+  if (error) {
+    console.log(error);
+  }
+
+  if (!productList?.length > 0) return <Loading />;
 
   return (
-    <div className=" grid mx-auto ">
-      {productList?.map((product) => (
-        <div key={product._id}>
-          <Link to={`/products/${product._id}`}>
-            <Product
-              url={product.photo[0].url}
-              name={product.name}
-              description={product.description}
-              price={product.price}
-            />
-          </Link>
+    <InfiniteScroll
+      dataLength={productList.length}
+      hasMore={hasNextPage}
+      next={() => fetchNextPage()}
+      loader={
+        <div className="mx-auto">
+          <Loading />
         </div>
-      ))}
-    </div>
+      }
+    >
+      <div className=" grid mx-auto ">
+        {productList?.map((product) => (
+          <div>
+            <Link to={`/products/${product._id}`}>
+              <Product
+                url={product.photo[0].url}
+                name={product.name}
+                description={product.description}
+                price={product.price}
+              />
+            </Link>
+          </div>
+        ))}
+      </div>
+    </InfiniteScroll>
   );
 };
 

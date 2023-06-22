@@ -4,8 +4,9 @@ const productsApi = axios.create({
   baseURL: "https://apirest.larahogarplastic.com",
 });
 
-export const getProudcts = async (page) => {
-  const res = await productsApi.get(`api/products?pageNumber=${page}`);
+export const getProducts = async (path) => {
+  console.log(path);
+  const res = await productsApi.get(path);
   return res.data;
 };
 
