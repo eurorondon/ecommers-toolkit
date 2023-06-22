@@ -5,7 +5,16 @@ export default function Product(props) {
   return (
     <div className=" card  text-start mx-1 " style={{ borderRadius: "10px" }}>
       <div className="mx-auto" style={{ maxWidth: "14rem" }}>
-        <img className="img-fluid" src={props.url} alt="product image" />
+        <img
+          className="mx-auto"
+          src={props.url}
+          alt="product image"
+          style={{
+            width: "95%",
+            height: "150px",
+            objectFit: "scale-down",
+          }}
+        />
       </div>
 
       <div className="p-2" style={{ backgroundColor: "" }}>

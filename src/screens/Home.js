@@ -19,13 +19,10 @@ const Home = () => {
       <Header />
       <Portada />
       <Categorias />
-      {isLoading ? null : (
-        <>
-          <NewProducts />
-          <Destacados />
-          <Ofertas />
-        </>
-      )}
+      <NewProducts />
+      <Ofertas />
+      <Destacados />
+      {isLoading ? null : <></>}
       <ShopSections />
       <Whatsapp />
     </div>

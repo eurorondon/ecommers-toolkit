@@ -3,52 +3,55 @@ import React from "react";
 const Categorias = () => {
   const categories = [
     {
-      name: "Audio",
+      name: "Smartphone",
       products: 8,
-      imageUrl:
-        "https://res.cloudinary.com/dpgpmqo6c/image/upload/v1686883430/ecommers%20electronic/71tQ8TWWh6L-removebg-preview_nyikao.png",
+      imageUrl: "images/iphone.png",
     },
     {
-      name: "phones",
+      name: "Auriculares",
       products: 5,
-      imageUrl:
-        "https://res.cloudinary.com/dpgpmqo6c/image/upload/v1686883525/ecommers%20electronic/adios-iphone-15-pro-max-bienvenido-iphone-15-ultra-removebg-preview_xtwp47.png",
+      imageUrl: "/images/audifonos.png",
     },
     {
-      name: "Gaming",
+      name: "Camara",
       products: 12,
-      imageUrl:
-        "https://res.cloudinary.com/dpgpmqo6c/image/upload/v1686883729/ecommers%20electronic/619MOiWtl_L._AC_UF1000_1000_QL80_-removebg-preview_uwjdqj.png",
+      imageUrl: "/images/camara.png",
     },
     {
-      name: "Music",
+      name: "Luces",
       products: 12,
-      imageUrl:
-        "https://res.cloudinary.com/dpgpmqo6c/image/upload/v1686883729/ecommers%20electronic/D_NQ_NP_661518-MLV53986588581_022023-W-removebg-preview_egyy85.png",
+      imageUrl: "/images/luces.png",
     },
     {
-      name: "Computa",
+      name: "Computador",
       products: 12,
-      imageUrl:
-        "https://res.cloudinary.com/dpgpmqo6c/image/upload/v1686883430/ecommers%20electronic/71tQ8TWWh6L-removebg-preview_nyikao.png",
+      imageUrl: "/images/mouse.png",
+    },
+    {
+      name: "Todos",
+      products: 12,
+      imageUrl: "/images/todos.png",
     },
     {
       name: "Juegos",
       products: 12,
-      imageUrl:
-        "https://res.cloudinary.com/dpgpmqo6c/image/upload/v1686883525/ecommers%20electronic/adios-iphone-15-pro-max-bienvenido-iphone-15-ultra-removebg-preview_xtwp47.png",
+      imageUrl: "/images/juegos.png",
     },
     {
-      name: "Cableado",
+      name: "streaming",
       products: 12,
-      imageUrl:
-        "https://res.cloudinary.com/dpgpmqo6c/image/upload/v1686883729/ecommers%20electronic/619MOiWtl_L._AC_UF1000_1000_QL80_-removebg-preview_uwjdqj.png",
+      imageUrl: "/images/streaming.png",
     },
     {
-      name: "negro",
+      name: "Sonido",
       products: 12,
-      imageUrl:
-        "https://res.cloudinary.com/dpgpmqo6c/image/upload/v1686883729/ecommers%20electronic/D_NQ_NP_661518-MLV53986588581_022023-W-removebg-preview_egyy85.png",
+      imageUrl: "/images/sonido.png",
+    },
+
+    {
+      name: "Coleccionables",
+      products: 12,
+      imageUrl: "/images/coleccionables.png",
     },
     // Agrega más categorías según sea necesario
   ];
@@ -90,8 +93,9 @@ const Categorias = () => {
     );
   if (window.innerWidth < 1150 && window.innerWidth > 768)
     return (
-      <>
+      <div className="py-4">
         <div
+          className=""
           style={{
             display: "flex",
             justifyContent: "center",
@@ -130,7 +134,7 @@ const Categorias = () => {
             backgroundColor: "#D8EAF2",
           }}
         >
-          {categories.slice(0, 5).map((category, index) => (
+          {categories.slice(5, 10).map((category, index) => (
             <div key={index} style={{ margin: "10px", textAlign: "center" }}>
               <div
                 style={{
@@ -155,7 +159,7 @@ const Categorias = () => {
             </div>
           ))}
         </div>
-      </>
+      </div>
     );
   if (window.innerWidth < 769)
     return (
@@ -200,7 +204,7 @@ const Categorias = () => {
             backgroundColor: "#D8EAF2",
           }}
         >
-          {categories.slice(0, 4).map((category, index) => (
+          {categories.slice(5, 9).map((category, index) => (
             <div key={index} style={{ margin: "5px", textAlign: "center" }}>
               <div
                 style={{

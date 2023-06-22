@@ -7,10 +7,18 @@ import { ArrowLeft, ArrowRight } from "@mui/icons-material";
 import Product from "../Destacados/ProductDestacados";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { getProducts } from "../../../api/productsApi";
+import { useQuery } from "@tanstack/react-query";
 
 const Destacados = () => {
-  const { productList } = useSelector((state) => state.products);
+  const { isLoading, data, isError, error } = useQuery(
+    ["destacados"], // Incluir el parámetro 'page' en el array de dependencias de la queryKey
+    () => getProducts("/api/products?category=Destacados") // Pasar una función anónima que invoque getProudcts con el parámetro page
+  );
+  const productList = data?.products;
   const sliderRef = useRef(null);
+
+  if (isLoading) return null;
 
   const renderArrows = () => {
     return (

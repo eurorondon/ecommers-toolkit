@@ -7,10 +7,19 @@ import { ArrowLeft, ArrowRight } from "@mui/icons-material";
 import Product from "../NewProducts/Product";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { getProducts } from "../../../api/productsApi";
+import { useQuery } from "@tanstack/react-query";
+import Loading from "../../Loading";
 
 const NewProducts = () => {
-  const { productList } = useSelector((state) => state.products);
+  const { isLoading, data, isError, error } = useQuery(
+    ["newProducts"], // Incluir el parámetro 'page' en el array de dependencias de la queryKey
+    () => getProducts("/api/products") // Pasar una función anónima que invoque getProudcts con el parámetro page
+  );
+  const productList = data?.products;
   const sliderRef = useRef(null);
+
+  if (isLoading) return null;
 
   const renderArrows = () => {
     return (
@@ -42,7 +51,7 @@ const NewProducts = () => {
         breakpoint: 4000,
         settings: {
           slidesToShow: 5,
-          slidesToScroll: 2,
+          slidesToScroll: 5,
         },
       },
       {
@@ -70,7 +79,7 @@ const NewProducts = () => {
   };
 
   const products = productList
-    ? productList.slice(0, window.innerWidth > 767 ? 30 : 12).map((item) => (
+    ? productList?.slice(0, window.innerWidth > 767 ? 30 : 12).map((item) => (
         <Link key={item._id} to={`/products/${item._id}`}>
           <Product
             url={item.photo[0].url}

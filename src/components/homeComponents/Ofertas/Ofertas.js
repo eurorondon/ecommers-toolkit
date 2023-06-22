@@ -7,10 +7,19 @@ import { ArrowLeft, ArrowRight } from "@mui/icons-material";
 import Product from "../Ofertas/ProductOfertas";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { getProducts } from "../../../api/productsApi";
+import { useQuery } from "@tanstack/react-query";
+import Loading from "../../Loading";
 
 const Ofertas = () => {
-  const { productList } = useSelector((state) => state.products);
+  const { isLoading, data, isError, error } = useQuery(
+    ["ofertas"], // Incluir el parámetro 'page' en el array de dependencias de la queryKey
+    () => getProducts("/api/products?category=Oferta") // Pasar una función anónima que invoque getProudcts con el parámetro page
+  );
+  const productList = data?.products;
   const sliderRef = useRef(null);
+
+  if (isLoading) return null;
 
   const renderArrows = () => {
     return (

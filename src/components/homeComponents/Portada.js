@@ -6,9 +6,12 @@ const Portada = () => {
       <div className="py-4" style={{ backgroundColor: "#D9D9D9" }}>
         <div className="container">
           <div className="row">
-            <div className="col-6 bg-info m-auto my-3 ">
+            <div className="col-6 m-auto my-3 ">
               <div className="d-flex justify-content-center aling-items-center  ">
-                <img src="/images/logo.png"></img>
+                <img
+                  src="/images/pulseras.png"
+                  style={{ maxWidth: "20rem" }}
+                ></img>
               </div>
             </div>
 
@@ -29,21 +32,32 @@ const Portada = () => {
     );
 
   return (
-    <div className="py-5" style={{ backgroundColor: "#D9D9D9" }}>
-      <div className={window.innerWidth < 768 ? "mx-5 " : "container"}>
-        <div className="row">
-          <div className="col-12  col-sm-6 d-flex flex-column justify-content-center aling-items-center container ">
+    <div className="py-3 " style={{ backgroundColor: "#D9D9D9" }}>
+      <div
+        className={
+          window.innerWidth < 768
+            ? "mx-5  "
+            : " container d-flex justify-content-center "
+        }
+      >
+        <div
+          className="d-flex  justify-content-center flex-column-reverse flex-md-row"
+          style={
+            window.innerWidth < 1200 ? { width: "100%" } : { width: "70%" }
+          }
+        >
+          <div className="    d-flex flex-column justify-content-center align-items-center  container ">
             <div className=" ">
               <div className="text-start">
-                <h1 style={{ fontWeight: "bold" }}>Todo lo que necesitas</h1>
+                <h2 style={{ fontWeight: "bold" }}>Todo lo que necesitas</h2>
               </div>
-              <h5>Los mejores articulos electronicos en tu tienda favorita</h5>
+              <h4>Los mejores articulos electronicos en tu tienda favorita</h4>
               <button className="btn btn-dark mt-3">Comprar Ahora</button>
             </div>
           </div>
-          <div className="col-6 bg-info m-auto ">
-            <div className="d-flex justify-content-center aling-items-center  ">
-              <img src="/images/logo.png"></img>
+          <div className=" m-auto ">
+            <div className="d-flex  justify-content-start  align-items-center ">
+              <img src="/images/pulseras.png"></img>
             </div>
           </div>
         </div>

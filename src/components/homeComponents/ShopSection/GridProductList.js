@@ -28,39 +28,39 @@ const GridProductList = () => {
 
   const productList = data?.pages.flatMap((page) => page.products) ?? [];
 
-  if (error) {
-    console.log(error);
-  }
-
-  if (!productList?.length > 0) return <Loading />;
-
-  return (
-    <InfiniteScroll
-      dataLength={productList.length}
-      hasMore={hasNextPage}
-      next={() => fetchNextPage()}
-      loader={
-        <div className="mx-auto">
-          <Loading />
-        </div>
-      }
-    >
-      <div className=" grid mx-auto ">
-        {productList?.map((product) => (
-          <div key={product._id}>
-            <Link to={`/products/${product._id}`}>
-              <Product
-                url={product.photo[0].url}
-                name={product.name}
-                description={product.description}
-                price={product.price}
-              />
-            </Link>
+  if (isLoading) return <Loading />;
+  else {
+    return (
+      <>
+        <h2>Todos los Articulos</h2>
+        <InfiniteScroll
+          dataLength={productList.length}
+          hasMore={hasNextPage}
+          next={() => fetchNextPage()}
+          loader={
+            <div className="mx-auto">
+              <Loading />
+            </div>
+          }
+        >
+          <div className=" grid mx-auto ">
+            {productList?.map((product) => (
+              <div key={product._id}>
+                <Link to={`/products/${product._id}`}>
+                  <Product
+                    url={product.photo[0].url}
+                    name={product.name}
+                    description={product.description}
+                    price={product.price}
+                  />
+                </Link>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-    </InfiniteScroll>
-  );
+        </InfiniteScroll>
+      </>
+    );
+  }
 };
 
 export default GridProductList;

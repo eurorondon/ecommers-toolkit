@@ -14,7 +14,7 @@ export default function Product(props) {
           alt="product image"
           style={{
             width: "95%",
-            height: "200px",
+            height: "150px",
             objectFit: "scale-down",
           }}
         />
