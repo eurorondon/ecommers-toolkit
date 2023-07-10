@@ -3,8 +3,10 @@ import { Link } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Menu, MenuItem } from "@mui/material";
 import { LocationOn, PersonOutline } from "@mui/icons-material";
+import { useSelector } from "react-redux";
 
 const Header = () => {
+  const { cartItems } = useSelector((state) => state.cart);
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleMenuClick = (event) => {
@@ -126,7 +128,7 @@ const Header = () => {
                       style={{ fontSize: "1.1rem" }}
                     ></i>
                     <span className="badge" style={{ fontSize: "0.8rem" }}>
-                      4
+                      {cartItems.length}
                     </span>
                   </Link>
                 </div>
@@ -197,7 +199,7 @@ const Header = () => {
                     className="fas fa-shopping-bag me-3 text-white"
                     style={{ fontSize: "1.1rem" }}
                   ></i>
-                  <span className="badge">4</span>
+                  <span className="badge">{cartItems.length}</span>
                 </Link>
               </div>
             </div>

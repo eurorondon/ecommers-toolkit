@@ -1,39 +1,54 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+// Obtén los productos guardados en el localStorage al cargar la página
+const getCartItemsFromLocalStorage = () => {
+  const cartItems = localStorage.getItem("cartItems");
+  return cartItems ? JSON.parse(cartItems) : [];
+};
+
 const cartSlice = createSlice({
   name: "cart",
   initialState: {
-    cartItems: [],
+    cartItems: getCartItemsFromLocalStorage(), // Obtén los productos guardados al inicializar el estado
   },
   reducers: {
     addToCart: (state, action) => {
       const newItem = action.payload;
-      const existingItemIndex = state.cartItems.findIndex(
-        (item) => item.data._id === newItem.data._id
-      );
-      if (existingItemIndex === -1) {
-        state.cartItems.push(newItem);
+      console.log(newItem);
+
+      if (newItem) {
+        const existingItem = state.cartItems.find(
+          (item) => item.data._id === newItem.data._id
+        );
+
+        if (existingItem) {
+          existingItem.qty = newItem.qty;
+        } else {
+          state.cartItems.push(newItem);
+        }
+
+        saveCartItemsToLocalStorage(state.cartItems);
+      } else {
+        console.log("No se encuentra el  id");
       }
+    },
+
+    removeFromCart: (state, action) => {
+      const productId = action.payload;
+      const cartItems = getCartItemsFromLocalStorage();
+      const updatedCartItems = cartItems.filter(
+        (item) => item.data._id !== productId
+      );
+      saveCartItemsToLocalStorage(updatedCartItems);
+      state.cartItems = updatedCartItems;
     },
   },
 });
 
-export const { addToCart } = cartSlice.actions;
+export const { addToCart, removeFromCart } = cartSlice.actions;
 
-// // Función para almacenar los datos del carrito en el localStorage
-// const saveCartItemsToLocalStorage = (cartItems) => {
-//   localStorage.setItem("cartItems", JSON.stringify(cartItems));
-// };
-// // Middleware para almacenar los datos del carrito en el localStorage después de cada acción
-// export const cartMiddleware = (store) => (next) => (action) => {
-//   const result = next(action);
-
-//   if (action.type.startsWith("cart/")) {
-//     const { cartItems } = store.getState().cart;
-//     saveCartItemsToLocalStorage(cartItems);
-//   }
-
-//   return result;
-// };
+const saveCartItemsToLocalStorage = (cartItems) => {
+  localStorage.setItem("cartItems", JSON.stringify(cartItems));
+};
 
 export default cartSlice.reducer;

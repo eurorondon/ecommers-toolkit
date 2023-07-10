@@ -5,11 +5,9 @@ import "slick-carousel/slick/slick-theme.css";
 import { ButtonBase } from "@mui/material";
 import { ArrowLeft, ArrowRight } from "@mui/icons-material";
 import Product from "../NewProducts/Product";
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getProducts } from "../../../api/productsApi";
 import { useQuery } from "@tanstack/react-query";
-import Loading from "../../Loading";
 
 const NewProducts = () => {
   const { isLoading, data, isError, error } = useQuery(
@@ -114,7 +112,7 @@ const NewProducts = () => {
           left: 0;
           right: 0;
           background-color: black;
-          display: none;
+          
         }
         .arrow-btn {
           font-size: 2rem;
