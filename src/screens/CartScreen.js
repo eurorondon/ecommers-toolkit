@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Header from "./../components/Header";
-import { Link, useParams, useSearchParams } from "react-router-dom";
+import {
+  Link,
+  useParams,
+  useSearchParams,
+  useNavigate,
+} from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getProudct } from "../api/productsApi";
 import { addToCart, removeFromCart } from "../features/cart/cartSlice";
@@ -8,6 +13,7 @@ import { addToCart, removeFromCart } from "../features/cart/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const CartScreen = () => {
+  const navigate = useNavigate();
   const { cartItems } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -34,8 +40,9 @@ const CartScreen = () => {
   const removeFromCartHandle = (id) => {
     dispatch(removeFromCart(id));
   };
-
-  console.log(cartItems);
+  const checkOutHandler = () => {
+    navigate("/login?redirect=placeorder");
+  };
 
   return (
     <>
@@ -66,10 +73,10 @@ const CartScreen = () => {
             </div>
             {/* cartiterm */}
             {cartItems.map((item) => (
-              <div className="cart-iterm row" key={item.product}>
+              <div className="cart-iterm row" key={item.data._id}>
                 <div
                   onClick={() => removeFromCartHandle(item?.data?._id)}
-                  className=" bg-dark remove-button d-flex justify-content-center align-items-center"
+                  className="  remove-button d-flex justify-content-center align-items-center"
                 >
                   <i className="fas fa-times"></i>
                 </div>
@@ -118,12 +125,9 @@ const CartScreen = () => {
               <Link to="/" className="col-md-6 ">
                 <button>Continue To Shopping</button>
               </Link>
+
               <div className="col-md-6 d-flex justify-content-md-end mt-3 mt-md-0">
-                <button>
-                  <Link to="/shipping" className="text-white">
-                    Checkout
-                  </Link>
-                </button>
+                <button onClick={checkOutHandler}>Checkout</button>
               </div>
             </div>
           </div>

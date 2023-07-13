@@ -3,11 +3,14 @@ import { Link } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Menu, MenuItem } from "@mui/material";
 import { LocationOn, PersonOutline } from "@mui/icons-material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setLogin } from "../features/users/usersSlice";
 
 const Header = () => {
   const { cartItems } = useSelector((state) => state.cart);
+  const userInfo = useSelector((state) => state.user);
   const [anchorEl, setAnchorEl] = useState(null);
+  const dispatch = useDispatch();
 
   const handleMenuClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -15,6 +18,11 @@ const Header = () => {
 
   const handleMenuClose = () => {
     setAnchorEl(null);
+  };
+
+  const logoutHandler = () => {
+    localStorage.removeItem("userInfo");
+    dispatch(setLogin({}));
   };
   return (
     <div style={{ position: "sticky", top: 0, zIndex: 100 }}>
@@ -117,7 +125,11 @@ const Header = () => {
                         Profile
                       </Link>
 
-                      <Link className="dropdown-item" to="#">
+                      <Link
+                        className="dropdown-item"
+                        to="#"
+                        onClick={logoutHandler}
+                      >
                         Logout
                       </Link>
                     </div>
@@ -173,26 +185,41 @@ const Header = () => {
                 </form>
               </div>
               <div className="col-md-3 d-flex align-items-center justify-content-end Login-Register">
-                <div className="btn-group">
-                  <button
-                    type="button"
-                    className="name-button dropdown-toggle"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
-                    Hi, Admin Doe
-                  </button>
-                  <div className="dropdown-menu">
-                    <Link className="dropdown-item" to="/profile">
-                      Profile
-                    </Link>
+                {userInfo.token ? (
+                  <div className="btn-group">
+                    <button
+                      type="button"
+                      className="name-button dropdown-toggle"
+                      data-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      Hi, {userInfo.name}
+                    </button>
+                    <div className="dropdown-menu">
+                      <Link className="dropdown-item" to="/profile">
+                        Profile
+                      </Link>
 
-                    <Link className="dropdown-item" to="#">
-                      Logout
+                      <Link
+                        className="dropdown-item"
+                        to="#"
+                        onClick={logoutHandler}
+                      >
+                        Logout
+                      </Link>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="">
+                    <Link to="/register" className=" button  my-auto ">
+                      <span className="text-white"> Registrar</span>
+                    </Link>
+                    <Link to="/login" className=" button my-auto text-white">
+                      Login
                     </Link>
                   </div>
-                </div>
+                )}
 
                 <Link to="/cart">
                   <i

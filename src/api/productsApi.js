@@ -11,6 +11,10 @@ export const getProducts = async (path) => {
 };
 
 export const getProudct = async (id) => {
+  if (id === undefined) {
+    return null;
+  }
+
   const res = await productsApi.get(`api/products/${id}`);
   return res.data;
 };

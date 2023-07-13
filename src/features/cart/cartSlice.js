@@ -14,7 +14,6 @@ const cartSlice = createSlice({
   reducers: {
     addToCart: (state, action) => {
       const newItem = action.payload;
-      console.log(newItem);
 
       if (newItem) {
         const existingItem = state.cartItems.find(
@@ -28,8 +27,6 @@ const cartSlice = createSlice({
         }
 
         saveCartItemsToLocalStorage(state.cartItems);
-      } else {
-        console.log("No se encuentra el  id");
       }
     },
 

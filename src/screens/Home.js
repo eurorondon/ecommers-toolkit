@@ -8,6 +8,7 @@ import Ofertas from "../components/homeComponents/Ofertas/Ofertas";
 import { useSelector } from "react-redux";
 import Portada from "../components/homeComponents/Portada";
 import Whatsapp from "../components/homeComponents/Whatsapp";
+import { withAuthenticator } from "@aws-amplify/ui-react";
 
 // import GridProductList from "../components/homeComponents/GridProductList";
 
