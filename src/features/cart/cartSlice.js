@@ -14,10 +14,11 @@ const cartSlice = createSlice({
   reducers: {
     addToCart: (state, action) => {
       const newItem = action.payload;
+      console.log(action.payload);
 
       if (newItem) {
         const existingItem = state.cartItems.find(
-          (item) => item.data._id === newItem.data._id
+          (item) => item.product === newItem.product
         );
 
         if (existingItem) {
@@ -34,7 +35,7 @@ const cartSlice = createSlice({
       const productId = action.payload;
       const cartItems = getCartItemsFromLocalStorage();
       const updatedCartItems = cartItems.filter(
-        (item) => item.data._id !== productId
+        (item) => item.product !== productId
       );
       saveCartItemsToLocalStorage(updatedCartItems);
       state.cartItems = updatedCartItems;

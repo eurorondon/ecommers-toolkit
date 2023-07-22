@@ -27,15 +27,23 @@ const CartScreen = () => {
 
   useEffect(() => {
     if (data) {
-      dispatch(addToCart({ data, qty }));
+      dispatch(
+        addToCart({
+          product: data?._id,
+          name: data.name,
+          image: data.image,
+          price: data?.price,
+          countInStock: data.countInStock,
+          qty,
+          photo: data.photo[0].url,
+        })
+      );
     }
   }, [data]);
 
-  // if (isLoading) return <h1>Loading</h1>;
+  if (isLoading) return <h1>Loading</h1>;
 
-  const total = cartItems
-    .reduce((a, i) => a + i.qty * i.data.price, 0)
-    .toFixed(2);
+  const total = cartItems.reduce((a, i) => a + i.qty * i.price, 0).toFixed(2);
 
   const removeFromCartHandle = (id) => {
     dispatch(removeFromCart(id));
@@ -73,19 +81,19 @@ const CartScreen = () => {
             </div>
             {/* cartiterm */}
             {cartItems.map((item) => (
-              <div className="cart-iterm row" key={item.data._id}>
+              <div className="cart-iterm row" key={item.product}>
                 <div
-                  onClick={() => removeFromCartHandle(item?.data?._id)}
+                  onClick={() => removeFromCartHandle(item.product)}
                   className="  remove-button d-flex justify-content-center align-items-center"
                 >
                   <i className="fas fa-times"></i>
                 </div>
                 <div className="cart-image col-md-3">
-                  <img src={item.data.photo[0].url} alt={item.name} />
+                  <img src={item.photo} alt={item.name} />
                 </div>
                 <div className="cart-text col-md-5 d-flex align-items-center">
-                  <Link to={`/products/${item?.data?._id}`}>
-                    <h4>{item?.data.name}</h4>
+                  <Link to={`/products/${item.product}`}>
+                    <h4>{item.name}</h4>
                   </Link>
                 </div>
                 <div className="cart-qty col-md-2 col-sm-5 mt-md-5 mt-3 mt-md-0 d-flex flex-column justify-content-center">
@@ -95,13 +103,13 @@ const CartScreen = () => {
                     onChange={(e) =>
                       dispatch(
                         addToCart({
-                          data: { _id: item.data?._id },
+                          product: item.product,
                           qty: Number(e.target.value),
                         })
                       )
                     }
                   >
-                    {[...Array(item.data.countInStock).keys()].map((x) => (
+                    {[...Array(item.countInStock).keys()].map((x) => (
                       <option key={x + 1} value={x + 1}>
                         {x + 1}
                       </option>
@@ -110,7 +118,7 @@ const CartScreen = () => {
                 </div>
                 <div className="cart-price mt-3 mt-md-0 col-md-2 align-items-sm-end align-items-start  d-flex flex-column justify-content-center col-sm-7">
                   <h6>PRECIO</h6>
-                  <h4>${item.data.price}</h4>
+                  <h4>${item.price}</h4>
                 </div>
               </div>
             ))}
