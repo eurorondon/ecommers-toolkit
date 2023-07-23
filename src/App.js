@@ -22,6 +22,7 @@ import "@aws-amplify/ui-react/styles.css";
 import awsExports from "./aws-exports";
 import PrivateRouter from "./PrivateRouter";
 import { setLogin } from "./features/users/usersSlice";
+import OrderScreen from "./screens/OrderScreen";
 Amplify.configure(awsExports);
 
 function App() {
@@ -44,6 +45,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/products/:id" element={<SingleProduct />} />
+        <Route path="/order/:id" element={<OrderScreen />} />
         <Route path="/cart/:id?" element={<CartScreen />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />

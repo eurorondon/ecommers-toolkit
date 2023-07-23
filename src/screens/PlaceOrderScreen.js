@@ -1,13 +1,75 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Header from "./../components/Header";
 import { withAuthenticator } from "@aws-amplify/ui-react";
+import { useDispatch, useSelector } from "react-redux";
+import { createOrder } from "../api/orderApi";
+import { useMutation } from "@tanstack/react-query";
+import { newOrder } from "../features/order/orderSlice";
+import { addToCart, clearCart } from "../features/cart/cartSlice";
 
 const PlaceOrderScreen = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   window.scrollTo(0, 0);
+  const cart = useSelector((state) => state.cart);
+  // const orders = useSelector((state) => state.order);
+
+  const { mutate, error, isLoading, data, success, isError } = useMutation(
+    ["creteOrder"],
+    () => createOrder(order)
+  );
+  console.log(data);
 
   const placeOrderHandler = (e) => {
     e.preventDefault();
+    mutate(order);
+  };
+
+  useEffect(() => {
+    if (data) {
+      navigate(`/order/${data?._id}`);
+      dispatch(clearCart());
+    }
+  }, [data]);
+
+  useEffect(() => {
+    dispatch(
+      newOrder({
+        data,
+      })
+    );
+  }, [data, dispatch]);
+
+  const errors = null;
+  const Message = "hola";
+
+  // Calculate Price
+  const addDecimals = (num) => {
+    return (Math.round(num * 100) / 100).toFixed(2);
+  };
+
+  const itemsPrice = addDecimals(
+    cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
+  );
+
+  const shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 0);
+  // cart.taxPrice = addDecimals(Number((0.16 * cart.itemsPrice).toFixed(2)));
+  const taxPrice = 0;
+  const totalPrice = (
+    Number(itemsPrice) +
+    Number(shippingPrice) +
+    Number(taxPrice)
+  ).toFixed(2);
+
+  const order = {
+    orderItems: cart.cartItems,
+    // shippingAddress: cart.shippingAddress,
+    // paymentMethod: cart.paymentMethod,
+    itemsPrice: itemsPrice,
+    shippingPrice: shippingPrice,
+    taxPrice: taxPrice,
+    totalPrice: totalPrice,
   };
 
   return (
@@ -70,26 +132,32 @@ const PlaceOrderScreen = () => {
 
         <div className="row order-products justify-content-between">
           <div className="col-lg-8">
-            {/* <Message variant="alert-info mt-5">Your cart is empty</Message> */}
-
-            <div className="order-product row">
-              <div className="col-md-3 col-6">
-                <img src="/images/8.png" alt="product" />
-              </div>
-              <div className="col-md-5 col-6 d-flex align-items-center">
-                <Link to={"/"}>
-                  <h6>Girls Nike shoes</h6>
-                </Link>
-              </div>
-              <div className="mt-3 mt-md-0 col-md-2 col-6  d-flex align-items-center flex-column justify-content-center ">
-                <h4>QUANTITY</h4>
-                <h6>4</h6>
-              </div>
-              <div className="mt-3 mt-md-0 col-md-2 col-6 align-items-end  d-flex flex-column justify-content-center ">
-                <h4>SUBTOTAL</h4>
-                <h6>$567</h6>
-              </div>
-            </div>
+            {cart.cartItems.length === 0 ? (
+              <Message variant="alert-info mt-5">Tu carrito esta vacío</Message>
+            ) : (
+              <>
+                {cart.cartItems.map((item, index) => (
+                  <div className="order-product row" key={index}>
+                    <div className="col-md-3 col-6">
+                      <img src={item.photo} alt={item.name} />
+                    </div>
+                    <div className="col-md-5 col-6 d-flex align-items-center">
+                      <Link to={`/products/${item.product}`}>
+                        <h6>{item.name}</h6>
+                      </Link>
+                    </div>
+                    <div className="mt-3 mt-md-0 col-md-2 col-6  d-flex align-items-center flex-column justify-content-center ">
+                      <h4>CANTIDAD</h4>
+                      <h6>{item.qty}</h6>
+                    </div>
+                    <div className="mt-3 mt-md-0 col-md-2 col-6 align-items-end  d-flex flex-column justify-content-center ">
+                      <h4>SUBTOTAL</h4>
+                      <h6>${item.qty * item.price}</h6>
+                    </div>
+                  </div>
+                ))}
+              </>
+            )}
           </div>
           {/* total */}
           <div className="col-lg-3 d-flex align-items-end flex-column mt-5 subtotal-order">
@@ -97,38 +165,48 @@ const PlaceOrderScreen = () => {
               <tbody>
                 <tr>
                   <td>
-                    <strong>Products</strong>
+                    <strong>Productos</strong>
                   </td>
-                  <td>$345</td>
+                  <td>${itemsPrice}</td>
                 </tr>
                 <tr>
                   <td>
-                    <strong>Shipping</strong>
+                    <strong>Delivery</strong>
                   </td>
-                  <td>$123</td>
+                  <td>${shippingPrice}</td>
                 </tr>
                 <tr>
                   <td>
-                    <strong>Tax</strong>
+                    <strong>Impuesto</strong>
                   </td>
-                  <td>$5</td>
+                  <td>${taxPrice}</td>
                 </tr>
                 <tr>
                   <td>
                     <strong>Total</strong>
                   </td>
-                  <td>$5678</td>
+                  <td>${totalPrice}</td>
                 </tr>
               </tbody>
             </table>
-            <button type="submit" onClick={placeOrderHandler}>
-              <Link to="/order" className="text-white">
-                PLACE ORDER
-              </Link>
-            </button>
-            {/* <div className="my-3 col-12">
+            {cart.cartItems.length === 0 ? null : (
+              <button type="submit" onClick={placeOrderHandler}>
+                Realizar Pedido
+              </button>
+            )}
+            {error && (
+              <div className="my-3 col-12">
                 <Message variant="alert-danger">{error}</Message>
-              </div> */}
+              </div>
+            )}
+
+            <br />
+
+            {error && (
+              <div className="my-3 col-12">
+                <Message variant="alert-danger">{error}</Message>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -137,3 +215,5 @@ const PlaceOrderScreen = () => {
 };
 
 export default PlaceOrderScreen;
+
+// actualemnte funciona bien , pero al colocarle la funcion de vaciar carrito y pasar de pagina , he tenido inconvenientes ...guardado 23/07

@@ -40,10 +40,16 @@ const cartSlice = createSlice({
       saveCartItemsToLocalStorage(updatedCartItems);
       state.cartItems = updatedCartItems;
     },
+
+    // Nuevo reducer para vaciar el carrito
+    clearCart: (state) => {
+      state.cartItems = [];
+      saveCartItemsToLocalStorage(state.cartItems);
+    },
   },
 });
 
-export const { addToCart, removeFromCart } = cartSlice.actions;
+export const { addToCart, removeFromCart, clearCart } = cartSlice.actions;
 
 const saveCartItemsToLocalStorage = (cartItems) => {
   localStorage.setItem("cartItems", JSON.stringify(cartItems));

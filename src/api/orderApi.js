@@ -29,7 +29,7 @@ export const createOrder = async (order) => {
   // console.log(order);
   try {
     const res = await productsApi.post("/api/orders", order, config);
-    // console.log(res);
+    console.log(res);
     return res.data;
   } catch (error) {
     // console.error(error);
