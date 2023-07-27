@@ -26,13 +26,11 @@ const config = {
 };
 
 export const createOrder = async (order) => {
-  // console.log(order);
   try {
     const res = await productsApi.post("/api/orders", order, config);
     console.log(res);
     return res.data;
   } catch (error) {
-    // console.error(error);
     throw error;
   }
 };
@@ -61,8 +59,8 @@ export const payOrder = async (orderId, order, email, image) => {
 
   const result = await productsApi.put(
     `/api/orders/${orderId}/upload`,
+    // config,
     form
-    // config
   );
 
   return result, res;

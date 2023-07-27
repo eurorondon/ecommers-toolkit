@@ -1,5 +1,5 @@
 import Product from "./ProductGrid";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { isError, useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { getProducts } from "../../../api/productsApi";
 import Loading from "../../Loading";
@@ -7,14 +7,23 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Message from "../../LoadingError/Error";
 
 const GridProductList = () => {
+  const { searchWord } = useParams();
+  console.log(searchWord);
+
   const { data, isLoading, isError, error, hasNextPage, fetchNextPage } =
     useInfiniteQuery(
-      ["infinity-products"],
-      ({ pageParam = 0 }) =>
-        getProducts(`/api/products?pageNumber=${pageParam}`),
-
+      ["infinity-products", searchWord],
+      ({ pageParam = 1 }) => {
+        const searchtest = searchWord
+          ? `/api/products?pageNumber=${pageParam}&keyword=${searchWord}`
+          : `/api/products?pageNumber=${pageParam}`;
+        return getProducts(searchtest);
+      },
       {
         getNextPageParam: (lastPage) => {
+          console.log("lastPage.page = ", lastPage.page);
+          console.log("lastPage.pages = ", lastPage.pages);
+
           if (lastPage.page === lastPage.pages) return false;
           return lastPage.page + 1;
         },
