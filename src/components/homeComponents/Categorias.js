@@ -1,14 +1,15 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Categorias = () => {
   const categories = [
     {
-      name: "Smartphone",
+      name: "Destacados",
       products: 8,
-      imageUrl: "images/iphone.png",
+      imageUrl: "/images/iphone.png",
     },
     {
-      name: "Auriculares",
+      name: "Hola",
       products: 5,
       imageUrl: "/images/audifonos.png",
     },
@@ -67,7 +68,8 @@ const Categorias = () => {
       >
         {categories.map((category, index) => (
           <div key={index} style={{ margin: "10px", textAlign: "center" }}>
-            <div
+            <Link
+              to={`/categories/${category.name}`}
               style={{
                 width: "120px",
                 height: "120px",
@@ -85,7 +87,7 @@ const Categorias = () => {
                 alt={category.name}
                 style={{ maxWidth: "100%", maxHeight: "100%" }}
               />
-            </div>
+            </Link>
             <div style={{ marginTop: "10px" }}>{category.name}</div>
           </div>
         ))}
@@ -104,7 +106,8 @@ const Categorias = () => {
         >
           {categories.slice(0, 5).map((category, index) => (
             <div key={index} style={{ margin: "10px", textAlign: "center" }}>
-              <div
+              <Link
+                to={`/categories/${category.name}`}
                 style={{
                   width: "120px",
                   height: "120px",
@@ -122,7 +125,7 @@ const Categorias = () => {
                   alt={category.name}
                   style={{ maxWidth: "100%", maxHeight: "100%" }}
                 />
-              </div>
+              </Link>
               <div style={{ marginTop: "10px" }}>{category.name}</div>
             </div>
           ))}
@@ -174,7 +177,8 @@ const Categorias = () => {
         >
           {categories.slice(0, 4).map((category, index) => (
             <div key={index} style={{ margin: "5px", textAlign: "center" }}>
-              <div
+              <Link
+                to={`/categories/${category.name}`}
                 style={{
                   width: "20vw",
                   height: "20vw",
@@ -192,7 +196,7 @@ const Categorias = () => {
                   alt={category.name}
                   style={{ maxWidth: "100%", maxHeight: "100%" }}
                 />
-              </div>
+              </Link>
               <div style={{ marginTop: "" }}>{category.name}</div>
             </div>
           ))}

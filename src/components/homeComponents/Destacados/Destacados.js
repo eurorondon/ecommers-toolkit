@@ -133,6 +133,13 @@ const Destacados = () => {
         .slick-active {
           margin: 0;
         }
+
+        /* Estilos para pantallas más pequeñas que 767px */
+        @media (max-width: 767px) {
+          .slider-arrow {
+            display: none;
+          }
+        }
       `}</style>
     </div>
   );

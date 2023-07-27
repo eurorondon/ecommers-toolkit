@@ -24,13 +24,13 @@ const Whatsapp = () => {
   return (
     <div className=" whatsapp ">
       {showObject && (
-        <div>
+        <div className="">
           <a className="" href="https://wa.me/message/T53QKXRSLJE3B1">
             <img
               className="  "
               src="/images/whatsapp.png"
               alt=""
-              style={{ maxWidth: "6vh" }}
+              style={{ maxWidth: "7vh" }}
             />
           </a>
         </div>

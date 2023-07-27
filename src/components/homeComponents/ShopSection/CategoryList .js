@@ -1,6 +1,11 @@
 import Product from "./ProductGrid";
 import { Link, useParams } from "react-router-dom";
-import { isError, useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import {
+  isError,
+  useInfiniteQuery,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { getProducts } from "../../../api/productsApi";
 import Loading from "../../Loading";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -8,7 +13,7 @@ import Message from "../../LoadingError/Error";
 import { useEffect } from "react";
 import { Search } from "@mui/icons-material";
 
-const GridProductList = () => {
+const CategoryList = () => {
   const { searchWord, category } = useParams();
 
   const capitalizeFirstLetter = (string) => {
@@ -18,6 +23,8 @@ const GridProductList = () => {
   // Verificar si category es null o undefined y asignar un valor vacío en caso afirmativo
   const modifiedParam = category ? capitalizeFirstLetter(category) : "";
 
+  const queryClient = useQueryClient();
+
   const {
     data,
     isLoading,
@@ -26,8 +33,9 @@ const GridProductList = () => {
     hasNextPage,
     fetchNextPage,
     refetch,
+    isFetching,
   } = useInfiniteQuery(
-    ["infinity-products", searchWord],
+    ["infinity-category", searchWord],
     ({ pageParam = 1 }) => {
       const searchtest = searchWord
         ? `/api/products?pageNumber=${pageParam}&keyword=${searchWord}`
@@ -41,18 +49,25 @@ const GridProductList = () => {
         if (lastPage.page === lastPage.pages) return false;
         return lastPage.page + 1;
       },
+      refetchOnWindowFocus: false,
     }
   );
+
+  useEffect(() => {
+    // Invalidar la caché de la consulta cuando cambien los parámetros de la URL
+    queryClient.invalidateQueries(["infinity-category", searchWord]);
+  }, [queryClient, searchWord, category]);
 
   useEffect(() => {
     refetch();
   }, [category, searchWord]);
 
   const productList = data?.pages.flatMap((page) => page.products) ?? [];
+  console.log(isLoading);
 
   return (
     <>
-      {isLoading ? (
+      {isFetching ? (
         <Loading />
       ) : isError ? (
         <Message variant="alert-danger">{error.message}</Message>
@@ -61,10 +76,10 @@ const GridProductList = () => {
           <div className="d-flex flex-column align-items-center my-2">
             <h2>
               <Search style={{ fontSize: "2rem" }} />
-              Sin Resultados para:
+              Sin Resultados en categoria
             </h2>
             <h3>
-              <em>{searchWord}</em>
+              <em>{category}</em>
             </h3>
           </div>
           <div>
@@ -93,6 +108,7 @@ const GridProductList = () => {
               ? `Categoria: ${category}`
               : "Todos los articulos"}
           </h3>
+          {isLoading && <h1>Loading</h1>}
           <InfiniteScroll
             dataLength={productList.length}
             hasMore={hasNextPage}
@@ -124,4 +140,4 @@ const GridProductList = () => {
   );
 };
 
-export default GridProductList;
+export default CategoryList;
