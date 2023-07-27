@@ -6,6 +6,7 @@ const initialState = {
   pages: "",
   page: 0,
   productDetails: [],
+  search: "",
 };
 
 const productsSlice = createSlice({
@@ -29,9 +30,18 @@ const productsSlice = createSlice({
     setProductDetails: (state, action) => {
       state.productDetails = [action.payload];
     },
+
+    setSearch: (state, action) => {
+      state.search = action.payload;
+    },
   },
 });
 
-export const { setProducts, setLoading, setPage, setProductDetails } =
-  productsSlice.actions;
+export const {
+  setProducts,
+  setLoading,
+  setPage,
+  setProductDetails,
+  setSearch,
+} = productsSlice.actions;
 export default productsSlice.reducer;

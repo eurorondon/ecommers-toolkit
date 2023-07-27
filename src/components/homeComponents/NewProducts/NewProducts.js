@@ -8,6 +8,7 @@ import Product from "../NewProducts/Product";
 import { Link } from "react-router-dom";
 import { getProducts } from "../../../api/productsApi";
 import { useQuery } from "@tanstack/react-query";
+import Message from "../../LoadingError/Error";
 
 const NewProducts = () => {
   const { isLoading, data, isError, error } = useQuery(
@@ -18,6 +19,7 @@ const NewProducts = () => {
   const sliderRef = useRef(null);
 
   if (isLoading) return null;
+  if (isError) return null;
 
   const renderArrows = () => {
     return (

@@ -5,6 +5,7 @@ import { useMutation } from "@tanstack/react-query";
 import { loginUser } from "../api/usersApi";
 import { setLogin } from "../features/users/usersSlice";
 import { useDispatch, useSelector } from "react-redux";
+import Message from "../components/LoadingError/Error";
 
 const Login = () => {
   const location = useLocation();
@@ -23,7 +24,7 @@ const Login = () => {
     },
   };
 
-  const { mutate, error, isLoading, data } = useMutation(
+  const { mutate, isError, error, isLoading, data } = useMutation(
     ["login"],
     () => loginUser(correo, password),
     {
@@ -80,6 +81,13 @@ const Login = () => {
             <Link to={"/register"}>Create Account</Link>
           </p>
         </form>
+        {isError && (
+          <div className="mt-4">
+            <Message variant="alert-danger">
+              {error.response.data.message}
+            </Message>
+          </div>
+        )}
       </div>
     </>
   );

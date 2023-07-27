@@ -1,14 +1,17 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Menu, MenuItem } from "@mui/material";
 import { LocationOn, PersonOutline } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { setLogin } from "../features/users/usersSlice";
+import { setSearch } from "../features/products/productsSlice";
 
 const Header = () => {
+  const navigate = useNavigate();
   const { cartItems } = useSelector((state) => state.cart);
   const userInfo = useSelector((state) => state.user);
+  const [keyword, setKeyword] = useState("");
   const [anchorEl, setAnchorEl] = useState(null);
   const dispatch = useDispatch();
 
@@ -24,6 +27,18 @@ const Header = () => {
     localStorage.removeItem("userInfo");
     dispatch(setLogin({}));
   };
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    if (keyword.trim()) {
+      navigate(`/search/${keyword}`);
+      // setCurrentPage(0);
+    } else {
+      navigate("/");
+    }
+    // dispatch(setSearch(keyword));
+  };
+
   return (
     <div style={{ position: "sticky", top: 0, zIndex: 100 }}>
       {/* Top Header */}
@@ -145,11 +160,12 @@ const Header = () => {
                   </Link>
                 </div>
                 <div className="col-12 d-flex align-items-center">
-                  <form className="input-group">
+                  <form onSubmit={submitHandler} className="input-group">
                     <input
                       type="search"
                       className="form-control rounded-left search"
                       placeholder="Search"
+                      onChange={(e) => setKeyword(e.target.value)}
                     />
                     <button type="submit" className="search-button ">
                       search
@@ -169,11 +185,12 @@ const Header = () => {
                 </Link>
               </div>
               <div className="col-md-6 col-8 d-flex align-items-center">
-                <form className="input-group">
+                <form onSubmit={submitHandler} className="input-group">
                   <input
                     type="search"
                     className="form-control rounded-left search"
                     placeholder="Search"
+                    onChange={(e) => setKeyword(e.target.value)}
                   />
                   <button
                     type="submit"

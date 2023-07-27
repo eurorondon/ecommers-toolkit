@@ -13,3 +13,18 @@ export const loginUser = async (email, password) => {
     throw error;
   }
 };
+
+export const registerUser = async (name, number, email, password) => {
+  try {
+    const res = await productsApi.post("/api/users", {
+      name,
+      number,
+      email,
+      password,
+    });
+    return res.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};

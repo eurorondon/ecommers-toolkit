@@ -6,6 +6,7 @@ import { getProudct } from "../api/productsApi";
 import Loading from "../components/Loading";
 import { useDispatch, useSelector } from "react-redux";
 import { setProductDetails } from "../features/products/productsSlice";
+import Message from "../components/LoadingError/Error";
 // import { Link } from "react-router-dom";
 // import Rating from "../components/homeComponents/Rating";
 // import Message from "./../components/LoadingError/Error";
@@ -16,6 +17,7 @@ const SingleProduct = ({ match }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [qty, setQty] = useState(1);
+  // const [showError, setshowError] = useState(false);
 
   // Ejecutamos la llamada a la API, react-query nos ayuda con el estado de la petición
   const { isLoading, data, isError, error } = useQuery(["product", id], () =>
@@ -29,26 +31,37 @@ const SingleProduct = ({ match }) => {
     }
   }, [data, dispatch]);
 
-  //usamos los datos del estado de redux
-  // const { setProductDetails } = useSelector((state) => state.products);
-
   const AddToCartHandle = (e) => {
     e.preventDefault();
     navigate(`/cart/${id}?qty=${qty}`);
   };
-
-  if (isLoading) return <Loading />;
 
   const handleGoBack = () => {
     navigate(-1);
   };
 
   const product = data;
-  if (product)
-    return (
-      <>
-        <Header />
-        <button onClick={handleGoBack}>Volver</button>
+
+  return (
+    <>
+      <Header />
+      <button className="mb-32" onClick={handleGoBack}>
+        Volver
+      </button>
+      {isLoading ? (
+        <div style={{ marginTop: "200px" }}>
+          <Loading />
+        </div>
+      ) : isError ? (
+        <div
+          className="container pt-32 bg-slate-200"
+          style={{ marginTop: "200px" }}
+        >
+          <Message className="mt-32" variant="alert-danger">
+            {error.message}
+          </Message>
+        </div>
+      ) : (
         <div className="container single-product">
           <div className="row">
             <div className="col-md-6">
@@ -163,8 +176,10 @@ const SingleProduct = ({ match }) => {
             </div>
           </div>
         </div>
-      </>
-    );
+      )}
+      }
+    </>
+  );
 };
 
 export default SingleProduct;

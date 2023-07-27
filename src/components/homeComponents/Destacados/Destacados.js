@@ -19,6 +19,7 @@ const Destacados = () => {
   const sliderRef = useRef(null);
 
   if (isLoading) return null;
+  if (isError) return null;
 
   const renderArrows = () => {
     return (

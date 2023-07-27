@@ -23,6 +23,7 @@ import awsExports from "./aws-exports";
 import PrivateRouter from "./PrivateRouter";
 import { setLogin } from "./features/users/usersSlice";
 import OrderScreen from "./screens/OrderScreen";
+import SearchResults from "./screens/SearchResults";
 Amplify.configure(awsExports);
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
         <Route path="/cart/:id?" element={<CartScreen />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/search/:searchWord" element={<SearchResults />} />
 
         <Route
           path="/placeorder"

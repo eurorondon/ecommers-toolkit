@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import { getProducts } from "../../../api/productsApi";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "../../Loading";
+import Message from "../../LoadingError/Error";
 
 const Ofertas = () => {
   const { isLoading, data, isError, error } = useQuery(
@@ -20,6 +21,7 @@ const Ofertas = () => {
   const sliderRef = useRef(null);
 
   if (isLoading) return null;
+  if (isError) return null;
 
   const renderArrows = () => {
     return (
