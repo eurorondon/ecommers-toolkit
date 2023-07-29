@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import Portada from "../components/homeComponents/Portada";
 import Whatsapp from "../components/homeComponents/Whatsapp";
 import { withAuthenticator } from "@aws-amplify/ui-react";
+import NavListDrawer from "../components/Navbar/NavListDrawer";
 
 // import GridProductList from "../components/homeComponents/GridProductList";
 
@@ -16,7 +17,10 @@ const Home = () => {
   const { isLoading } = useSelector((state) => state.products);
 
   return (
-    <div className="bg-neutral-100">
+    <div
+      className="pb-5"
+      style={{ backgroundColor: "#d8eaf2", height: " 100%" }}
+    >
       <Header />
       <Portada />
       <Categorias />

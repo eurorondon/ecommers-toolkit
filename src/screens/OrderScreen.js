@@ -206,8 +206,8 @@ const OrderScreen = () => {
               </div>
             ) : isUploading ? (
               <>
-                <div className="  " style={{ width: "100%" }}>
-                  <Loading className="my-5" />
+                <div className="py-5  " style={{ width: "100%" }}>
+                  <Loading className="py-5" />
                 </div>
               </>
             ) : (

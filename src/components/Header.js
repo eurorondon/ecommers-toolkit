@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import MenuIcon from "@mui/icons-material/Menu";
-import { Menu, MenuItem } from "@mui/material";
+import Menu from "@mui/icons-material/Menu";
+import { Button, Drawer, MenuItem } from "@mui/material";
 import { LocationOn, PersonOutline } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { setLogin } from "../features/users/usersSlice";
 import { setSearch } from "../features/products/productsSlice";
+import NavListDrawer from "./Navbar/NavListDrawer";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ const Header = () => {
   const userInfo = useSelector((state) => state.user);
   const [keyword, setKeyword] = useState("");
   const [anchorEl, setAnchorEl] = useState(null);
+  const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
 
   const handleMenuClick = (event) => {
@@ -76,44 +78,26 @@ const Header = () => {
           backgroundColor: "#040915",
         }}
       >
-        <div className="container">
+        <div className={window.innerWidth > 767 ? "container" : null}>
           {/* MOBILE HEADER */}
           <div className="mobile-header pb-2">
-            <div className="container ">
+            <div className=" ">
               <div className="row ">
                 <div className="col-6 d-flex align-items-center">
                   <div>
-                    <MenuIcon
-                      aria-controls="menu"
-                      aria-haspopup="true"
-                      onClick={handleMenuClick}
-                      color="white"
+                    <Button
                       className="text-white"
-                      style={{ fontSize: "2.2rem" }}
+                      onClick={() => setOpen(true)}
                     >
-                      <MenuIcon className="text-white" />
-                    </MenuIcon>
-                    <Menu
-                      id="menu"
-                      anchorEl={anchorEl}
-                      open={Boolean(anchorEl)}
-                      onClose={handleMenuClose}
+                      <Menu style={{ fontSize: "2.2rem" }} />
+                    </Button>
+                    <Drawer
+                      open={open}
+                      anchor="left"
+                      onClose={() => setOpen(false)}
                     >
-                      {/* Agrega aquí los elementos de menú desplegable */}
-                      <MenuItem className="menu-item" onClick={handleMenuClose}>
-                        Item 1
-                      </MenuItem>
-                      <MenuItem className="menu-item" onClick={handleMenuClose}>
-                        Item 2
-                      </MenuItem>
-                      <MenuItem
-                        className="menu-item"
-                        onClick={handleMenuClose}
-                        style={{ backgroundColor: "" }}
-                      >
-                        Item 3
-                      </MenuItem>
-                    </Menu>
+                      <NavListDrawer />
+                    </Drawer>
                   </div>
                   <Link className="navbar-brand ms-3" to="/">
                     <img alt="logo" src="/images/logo.png" />
@@ -173,17 +157,27 @@ const Header = () => {
                       </div>
                     )}
                   </div>
-                  <Link to="/cart" className="cart-mobile-icon text-white">
+                  <Link
+                    to="/cart"
+                    className="cart-mobile-icon text-white  me-3"
+                  >
                     <i
                       className="fas fa-shopping-bag me-3"
                       style={{ fontSize: "1.1rem" }}
                     ></i>
-                    <span className="badge" style={{ fontSize: "0.8rem" }}>
+                    <span
+                      className="badge d-flex justify-content-center align-items-center"
+                      style={{
+                        fontSize: "0.8rem",
+                        width: "20px",
+                        height: "20px",
+                      }}
+                    >
                       {cartItems.length}
                     </span>
                   </Link>
                 </div>
-                <div className="col-12 d-flex align-items-center">
+                <div className=" d-flex justify-content-center align-items-center  px-5 ">
                   <form onSubmit={submitHandler} className="input-group">
                     <input
                       type="search"

@@ -6,7 +6,7 @@ body {
   padding: 0;
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
-  background-color: #d8eaf2;
+  /* background-color: #d8eaf2; */
 }
 
 /* shop section */
@@ -144,9 +144,8 @@ textarea:focus {
   position: absolute;
   top: -20px;
   right: -5px;
-  border-radius: 100px;
+  border-radius: 200px;
   padding: 5px 7px;
-  font-size: 12px;
 }
 .name-button {
   padding: 5px 15px;

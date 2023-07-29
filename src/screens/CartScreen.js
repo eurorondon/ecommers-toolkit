@@ -16,6 +16,7 @@ import Loading from "../components/Loading";
 import Footer from "../components/Footer";
 
 const CartScreen = () => {
+  window.scrollTo(0, 0);
   const navigate = useNavigate();
   const { cartItems } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
@@ -72,17 +73,22 @@ const CartScreen = () => {
       ) : (
         <div className="container">
           {cartItems.length === 0 ? (
-            <div className=" alert alert-info text-center mt-3">
-              Your cart is empty
-              <Link
-                className="btn btn-success mx-5 px-5 py-3"
-                to="/"
-                style={{
-                  fontSize: "12px",
-                }}
-              >
-                SHOPPING NOW
-              </Link>
+            <div
+              className="d-flex align-items-center"
+              style={{ minHeight: "60vh" }}
+            >
+              <div className=" alert alert-info text-center mt-3">
+                Your cart is empty
+                <Link
+                  className="btn btn-success mx-5 px-5 py-3"
+                  to="/"
+                  style={{
+                    fontSize: "12px",
+                  }}
+                >
+                  SHOPPING NOW
+                </Link>
+              </div>
             </div>
           ) : (
             <div>
