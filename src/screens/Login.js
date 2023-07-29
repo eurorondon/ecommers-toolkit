@@ -60,6 +60,13 @@ const Login = () => {
     <>
       <Header />
       <div className="container d-flex flex-column justify-content-center align-items-center login-center">
+        {isError && (
+          <div className="mt-4">
+            <Message variant="alert-danger">
+              {error.response.data.message}
+            </Message>
+          </div>
+        )}
         <form
           className="Login col-md-8 col-lg-4 col-11"
           onSubmit={submitHandler}
@@ -68,6 +75,7 @@ const Login = () => {
             type="email"
             placeholder="Email"
             value={correo}
+            // value="admin@gmail.com"
             onChange={(e) => setCorreo(e.target.value)}
           />
           <input
@@ -81,13 +89,6 @@ const Login = () => {
             <Link to={"/register"}>Create Account</Link>
           </p>
         </form>
-        {isError && (
-          <div className="mt-4">
-            <Message variant="alert-danger">
-              {error.response.data.message}
-            </Message>
-          </div>
-        )}
       </div>
     </>
   );

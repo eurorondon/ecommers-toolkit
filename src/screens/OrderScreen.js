@@ -6,12 +6,13 @@ import Loading from "./../components/LoadingError/Loading";
 import { useSelector } from "react-redux";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { orderDetails, payOrder } from "../api/orderApi";
+import Footer from "../components/Footer";
 
 // import { PayPalButton } from "react-paypal-button-v2";
 
 const OrderScreen = () => {
   const queryClient = useQueryClient();
-  window.scrollTo(0, 0);
+  // window.scrollTo(0, 0);
   const [image, setImage] = useState([]);
   const { email } = useSelector((state) => state.user);
   const [comprobantePago, setComprobantePago] = useState(null);
@@ -31,17 +32,17 @@ const OrderScreen = () => {
   );
 
   const order = testing;
-  console.log(order?.comprobantePago);
 
-  const { mutate, data } = useMutation(["payorder"], () =>
-    payOrder(orderId, order, email, image)
-  );
+  const {
+    mutate,
+    data,
+    isLoading: isUploading,
+  } = useMutation(["payorder"], () => payOrder(orderId, order, email, image));
 
   const submitHandler = (e) => {
     e.preventDefault();
     mutate(orderId, order, email, image, {
       onSuccess: (data) => {
-        console.log("Mutación exitosa:", data); // Verifica si los datos son los esperados
         // Actualiza el estado con los datos devueltos por la mutación
         setComprobantePago(data);
         // Invalida la consulta "orderDetails" para volver a obtener los datos
@@ -49,19 +50,21 @@ const OrderScreen = () => {
       },
     });
   };
-  console.log(comprobantePago);
 
   // Efecto que se ejecutará cada vez que cambie la respuesta de la mutación
   useEffect(() => {
     if (data) {
-      setComprobantePago(data.data.comprobantePago);
+      setComprobantePago(data.data?.comprobantePago);
       queryClient.invalidateQueries("orderDetails");
     }
   }, [data]);
 
+  // const isUploading = true;
+
   return (
     <>
       <Header />
+
       <div className="container">
         <div className="row  order-detail">
           <div className="col-lg-4 col-sm-4 mb-lg-4 mb-5 mb-sm-0">
@@ -83,7 +86,7 @@ const OrderScreen = () => {
             </div>
           </div>
           {/* 2 */}
-          <div className="col-lg-4 col-sm-4 mb-lg-4 mb-5 mb-sm-0">
+          {/* <div className="col-lg-4 col-sm-4 mb-lg-4 mb-5 mb-sm-0">
             <div className="row">
               <div className="col-md-4 center">
                 <div className="alert-success order-box">
@@ -104,9 +107,9 @@ const OrderScreen = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
           {/* 3 */}
-          <div className="col-lg-4 col-sm-4 mb-lg-4 mb-5 mb-sm-0">
+          {/* <div className="col-lg-4 col-sm-4 mb-lg-4 mb-5 mb-sm-0">
             <div className="row">
               <div className="col-md-4 center">
                 <div className="alert-success order-box">
@@ -127,14 +130,14 @@ const OrderScreen = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
-      <div className="row order-products justify-content-between">
-        <div className="col-lg-8">
-          {isLoading ? (
-            <>loading</>
-          ) : order.orderItems ? (
+
+      {/* Tabla de order de productos */}
+      <div className="row order-products justify-content-between  container mx-auto ">
+        <div className="col-lg-8  ">
+          {order?.orderItems ? (
             <>
               {order.orderItems.map((item, index) => (
                 <div className="order-product row" key={index}>
@@ -163,9 +166,9 @@ const OrderScreen = () => {
         </div>
         {/* total */}
         {isLoading ? (
-          <>Loading</>
+          <Loading />
         ) : (
-          <div className="col-lg-3 d-flex align-items-end flex-column mt-5 subtotal-order">
+          <div className="col-lg-3 d-flex align-items-end flex-column mt-5 subtotal-order ">
             <table className="table table-bordered">
               <tbody>
                 <tr>
@@ -196,14 +199,15 @@ const OrderScreen = () => {
             </table>
 
             {comprobantePago || order.comprobantePago ? (
-              <>
-                <div className="my-1">
-                  <p>
-                    Tu comprobante ha sido cargado con exito, gracias por tu
-                    compra
-                  </p>
+              <div className="my-1 mx-auto">
+                <p>Tu comprobante ha sido cargado con exito</p>
 
-                  <button>ir a Whatsapp</button>
+                <button>ir a Whatsapp</button>
+              </div>
+            ) : isUploading ? (
+              <>
+                <div className="  " style={{ width: "100%" }}>
+                  <Loading className="my-5" />
                 </div>
               </>
             ) : (
@@ -223,16 +227,12 @@ const OrderScreen = () => {
                   />
                   <button>Subir Comprobante</button>
                 </form>
-                {/* {cargando == true ? (
-                <div className="mb-5">
-                  <Loading className="mt-5" />
-                </div>
-              ) : null} */}
               </div>
             )}
           </div>
         )}
       </div>
+      <Footer />
     </>
   );
 };

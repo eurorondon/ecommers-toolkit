@@ -13,6 +13,7 @@ import { addToCart, removeFromCart } from "../features/cart/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/LoadingError/Error";
 import Loading from "../components/Loading";
+import Footer from "../components/Footer";
 
 const CartScreen = () => {
   const navigate = useNavigate();
@@ -21,7 +22,6 @@ const CartScreen = () => {
   const { id } = useParams();
   const [searchParams] = useSearchParams();
   const qty = Number(searchParams.get("qty")) || 1;
-  // window.scrollTo(0, 0);
 
   const { isLoading, data, isError, error } = useQuery(["product", id], () =>
     getProudct(id)
@@ -156,7 +156,7 @@ const CartScreen = () => {
         </div>
       )}
 
-      {/* Cart */}
+      <Footer />
     </>
   );
 };

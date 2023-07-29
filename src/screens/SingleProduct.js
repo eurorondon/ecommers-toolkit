@@ -7,12 +7,14 @@ import Loading from "../components/Loading";
 import { useDispatch, useSelector } from "react-redux";
 import { setProductDetails } from "../features/products/productsSlice";
 import Message from "../components/LoadingError/Error";
+import Footer from "../components/Footer";
 // import { Link } from "react-router-dom";
 // import Rating from "../components/homeComponents/Rating";
 // import Message from "./../components/LoadingError/Error";
 // import products from "../data/Products";
 
 const SingleProduct = ({ match }) => {
+  window.scrollTo(0, 0);
   const dispatch = useDispatch();
   const { id } = useParams();
   const navigate = useNavigate();
@@ -45,9 +47,9 @@ const SingleProduct = ({ match }) => {
   return (
     <>
       <Header />
-      <button className="mb-32" onClick={handleGoBack}>
+      {/* <button className="mb-32" onClick={handleGoBack}>
         Volver
-      </button>
+      </button> */}
       {isLoading ? (
         <div style={{ marginTop: "200px" }}>
           <Loading />
@@ -177,7 +179,7 @@ const SingleProduct = ({ match }) => {
           </div>
         </div>
       )}
-      }
+      <Footer />
     </>
   );
 };

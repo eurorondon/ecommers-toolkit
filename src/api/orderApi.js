@@ -4,70 +4,84 @@ const productsApi = axios.create({
   baseURL: process.env.REACT_APP_SERVER_URL,
 });
 
-const userInfoFromLocalStorage = localStorage.getItem("userInfo");
-// console.log(userInfoFromLocalStorage);
-
-let userInfo = null;
-
-try {
-  // Parsear el valor si es una cadena JSON y obtener un objeto JavaScript
-  userInfo = JSON.parse(userInfoFromLocalStorage);
-} catch (error) {
-  // Si hay algún error al parsear, puedes manejarlo aquí o simplemente dejar userInfo como null
-}
-
-// console.log(userInfo);
-
-const config = {
-  headers: {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${userInfo?.token}`,
-  },
-};
-
 export const createOrder = async (order) => {
-  try {
-    const res = await productsApi.post("/api/orders", order, config);
-    console.log(res);
-    return res.data;
-  } catch (error) {
-    throw error;
+  const userInfoFromLocalStorage = localStorage.getItem("userInfo");
+  const userInfo = JSON.parse(userInfoFromLocalStorage ?? "null");
+
+  if (userInfo?.token) {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      const res = await productsApi.post("/api/orders", order, config);
+
+      return res.data;
+    } catch (error) {
+      throw error;
+    }
   }
 };
 
 export const orderDetails = async (id) => {
-  // console.log(order);
+  const userInfoFromLocalStorage = localStorage.getItem("userInfo");
+  const userInfo = JSON.parse(userInfoFromLocalStorage ?? "null");
+
   try {
-    const res = await productsApi.get(`/api/orders/${id}`, config);
-    // console.log(res);
-    return res.data;
+    if (userInfo?.token) {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      const res = await productsApi.get(`/api/orders/${id}`, config);
+      return res.data;
+    } else {
+    }
   } catch (error) {
-    // console.error(error);
     throw error;
   }
 };
 
 export const payOrder = async (orderId, order, email, image) => {
+  const userInfoFromLocalStorage = localStorage.getItem("userInfo");
+  const userInfo = JSON.parse(userInfoFromLocalStorage ?? "null");
+
   const userName = order.user.name;
   const { totalPrice, _id } = order;
-  console.log(image);
 
-  const res = await productsApi.put(`/api/orders/${orderId}/pay`, {}, config);
+  try {
+    if (userInfo?.token) {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
 
-  const form = new FormData();
-  form.append("image", image);
+      const res = await productsApi.put(
+        `/api/orders/${orderId}/pay`,
+        {},
+        config
+      );
 
-  const result = await productsApi.put(
-    `/api/orders/${orderId}/upload`,
-    // config,
-    form
-  );
+      const form = new FormData();
+      form.append("image", image);
 
-  return result, res;
+      const result = await productsApi.put(
+        `/api/orders/${orderId}/upload`,
+        form
+        // config
+      );
 
-  // console.log(result);
-
-  // console.log(form);
-
-  // console.log(order.user.name, order.user.email, console.log(image));
+      return { result }; // Devuelve un objeto con ambas respuestas
+    }
+  } catch (error) {
+    throw error;
+  }
 };

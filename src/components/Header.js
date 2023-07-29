@@ -134,20 +134,44 @@ const Header = () => {
                       }}
                     >
                       <PersonOutline style={{ fontSize: "1.8rem" }} />
+                      {/* {userInfo?.name?.length > 7 ? (
+                        <text style={{ fontSize: "0.9rem" }}>
+                          {userInfo.name.slice(0, 6) + "..."}
+                        </text>
+                      ) : (
+                        <text style={{ fontSize: "1rem" }}>
+                          {userInfo.name}
+                        </text>
+                      )} */}
+                      <text style={{ fontSize: "0.8rem" }}>
+                        {userInfo.name}
+                      </text>
                     </button>
-                    <div className="dropdown-menu">
-                      <Link className="dropdown-item" to="/profile">
-                        Profile
-                      </Link>
+                    {userInfo.token ? (
+                      <div className="dropdown-menu">
+                        <Link className="dropdown-item" to="/profile">
+                          Profile
+                        </Link>
 
-                      <Link
-                        className="dropdown-item"
-                        to="#"
-                        onClick={logoutHandler}
-                      >
-                        Logout
-                      </Link>
-                    </div>
+                        <Link
+                          className="dropdown-item"
+                          to="#"
+                          onClick={logoutHandler}
+                        >
+                          Logout
+                        </Link>
+                      </div>
+                    ) : (
+                      <div className="dropdown-menu">
+                        <Link className="dropdown-item" to="/register">
+                          Registrar
+                        </Link>
+
+                        <Link className="dropdown-item" to="/login">
+                          Login
+                        </Link>
+                      </div>
+                    )}
                   </div>
                   <Link to="/cart" className="cart-mobile-icon text-white">
                     <i
@@ -229,7 +253,7 @@ const Header = () => {
                   </div>
                 ) : (
                   <div className="">
-                    <Link to="/register" className=" button  my-auto ">
+                    <Link to="/register" className=" button  my-auto  ">
                       <span className="text-white"> Registrar</span>
                     </Link>
                     <Link to="/login" className=" button my-auto text-white">
@@ -240,7 +264,7 @@ const Header = () => {
 
                 <Link to="/cart">
                   <i
-                    className="fas fa-shopping-bag me-3 text-white"
+                    className="fas fa-shopping-bag mx-4 text-white"
                     style={{ fontSize: "1.1rem" }}
                   ></i>
                   <span className="badge">{cartItems.length}</span>

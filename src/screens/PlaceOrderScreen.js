@@ -7,6 +7,8 @@ import { createOrder } from "../api/orderApi";
 import { useMutation } from "@tanstack/react-query";
 import { newOrder } from "../features/order/orderSlice";
 import { addToCart, clearCart } from "../features/cart/cartSlice";
+import Message from "../components/LoadingError/Error";
+import Footer from "../components/Footer";
 
 const PlaceOrderScreen = () => {
   const dispatch = useDispatch();
@@ -19,7 +21,6 @@ const PlaceOrderScreen = () => {
     ["creteOrder"],
     () => createOrder(order)
   );
-  console.log(data);
 
   const placeOrderHandler = (e) => {
     e.preventDefault();
@@ -40,9 +41,6 @@ const PlaceOrderScreen = () => {
       })
     );
   }, [data, dispatch]);
-
-  const errors = null;
-  const Message = "hola";
 
   // Calculate Price
   const addDecimals = (num) => {
@@ -94,7 +92,7 @@ const PlaceOrderScreen = () => {
             </div>
           </div>
           {/* 2 */}
-          <div className="col-lg-4 col-sm-4 mb-lg-4 mb-5 mb-sm-0">
+          {/* <div className="col-lg-4 col-sm-4 mb-lg-4 mb-5 mb-sm-0">
             <div className="row">
               <div className="col-md-4 center">
                 <div className="alert-success order-box">
@@ -109,9 +107,9 @@ const PlaceOrderScreen = () => {
                 <p>Pay method: Paypal</p>
               </div>
             </div>
-          </div>
+          </div> */}
           {/* 3 */}
-          <div className="col-lg-4 col-sm-4 mb-lg-4 mb-5 mb-sm-0">
+          {/* <div className="col-lg-4 col-sm-4 mb-lg-4 mb-5 mb-sm-0">
             <div className="row">
               <div className="col-md-4 center">
                 <div className="alert-success order-box">
@@ -127,7 +125,7 @@ const PlaceOrderScreen = () => {
                 </p>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
 
         <div className="row order-products justify-content-between">
@@ -196,20 +194,13 @@ const PlaceOrderScreen = () => {
             )}
             {error && (
               <div className="my-3 col-12">
-                <Message variant="alert-danger">{error}</Message>
-              </div>
-            )}
-
-            <br />
-
-            {error && (
-              <div className="my-3 col-12">
-                <Message variant="alert-danger">{error}</Message>
+                <Message variant="alert-danger">{error.message}</Message>
               </div>
             )}
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 };

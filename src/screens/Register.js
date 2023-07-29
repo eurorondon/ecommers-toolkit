@@ -24,10 +24,6 @@ const Register = () => {
     () => registerUser(name, number, email, password)
   );
 
-  if (data) {
-    console.log(data);
-  }
-
   useEffect(() => {
     if (data) {
       const { createdAt, email, isAdmin, name, number, token, _id } = data;
@@ -35,21 +31,32 @@ const Register = () => {
     }
   }, [data]);
 
-  useEffect(() => {
-    if (user.token) {
-      if (redirect === "/") {
-        navigate("/");
-      } else {
-        navigate(`/${redirect}`);
-      }
-    }
-  }, [user.token]);
+  // useEffect(() => {
+  //   if (user.token) {
+  //     if (redirect === "/") {
+  //       navigate("/");
+  //     } else {
+  //       navigate(`/${redirect}`);
+  //     }
+  //   }
+  // }, [user.token]);
 
   window.scrollTo(0, 0);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    mutate({ name, number, email, password });
+    mutate(
+      { name, number, email, password },
+      {
+        onSuccess: () => {
+          if (redirect === "/") {
+            navigate("/");
+          } else {
+            navigate(`/${redirect}`);
+          }
+        },
+      }
+    );
   };
 
   return (
