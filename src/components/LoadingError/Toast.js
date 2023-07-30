@@ -1,5 +1,7 @@
 import React from "react";
 import { ToastContainer } from "react-toastify";
+// index.js o App.js
+import "react-toastify/dist/ReactToastify.css";
 
 const Toast = () => {
   return (

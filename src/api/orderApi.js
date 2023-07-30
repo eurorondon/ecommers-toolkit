@@ -85,3 +85,24 @@ export const payOrder = async (orderId, order, email, image) => {
     throw error;
   }
 };
+
+export const listMyOrders = async (id) => {
+  const userInfoFromLocalStorage = localStorage.getItem("userInfo");
+  const userInfo = JSON.parse(userInfoFromLocalStorage ?? "null");
+
+  try {
+    if (userInfo?.token) {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      const res = await productsApi.get(`/api/orders/`, config);
+      return res.data;
+    } else {
+    }
+  } catch (error) {
+    throw error;
+  }
+};

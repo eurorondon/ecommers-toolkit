@@ -25,6 +25,7 @@ import { setLogin } from "./features/users/usersSlice";
 import OrderScreen from "./screens/OrderScreen";
 import SearchResults from "./screens/SearchResults";
 import CategoriesResult from "./screens/CategoriesResults";
+import ProfileScreen from "./screens/ProfileScreen";
 
 Amplify.configure(awsExports);
 
@@ -48,13 +49,27 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/products/:id" element={<SingleProduct />} />
-        <Route path="/order/:id" element={<OrderScreen />} />
+        <Route
+          path="/profile"
+          element={
+            <PrivateRouter>
+              <ProfileScreen />
+            </PrivateRouter>
+          }
+        />
+        <Route
+          path="/order/:id"
+          element={
+            <PrivateRouter>
+              <OrderScreen />
+            </PrivateRouter>
+          }
+        />
         <Route path="/cart/:id?" element={<CartScreen />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/search/:searchWord" element={<SearchResults />} />
         <Route path="/categories/:category" element={<CategoriesResult />} />
-
         <Route
           path="/placeorder"
           element={

@@ -127,9 +127,9 @@ const Header = () => {
                           {userInfo.name}
                         </text>
                       )} */}
-                      <text style={{ fontSize: "0.8rem" }}>
+                      <span style={{ fontSize: "0.8rem" }}>
                         {userInfo.name}
-                      </text>
+                      </span>
                     </button>
                     {userInfo.token ? (
                       <div className="dropdown-menu">

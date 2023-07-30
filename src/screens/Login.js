@@ -6,6 +6,7 @@ import { loginUser } from "../api/usersApi";
 import { setLogin } from "../features/users/usersSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/LoadingError/Error";
+import Loading from "../components/LoadingError/Loading";
 
 const Login = () => {
   const location = useLocation();
@@ -35,7 +36,10 @@ const Login = () => {
   useEffect(() => {
     if (data) {
       const { createdAt, email, isAdmin, name, number, token, _id } = data;
-      dispatch(setLogin({ name, email, isAdmin, token, _id }));
+      console.log(createdAt);
+      dispatch(
+        setLogin({ name, email, number, isAdmin, token, _id, createdAt })
+      );
     }
   }, [data]);
 
@@ -89,6 +93,11 @@ const Login = () => {
             <Link to={"/register"}>Create Account</Link>
           </p>
         </form>
+        {isLoading && (
+          <div className="my-5">
+            <Loading />
+          </div>
+        )}
       </div>
     </>
   );
