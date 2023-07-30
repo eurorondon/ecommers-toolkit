@@ -1,25 +1,40 @@
 import React, { useEffect, useState } from "react";
 import Header from "./../components/Header";
-import { useParams, useNavigate } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import { getProudct } from "../api/productsApi";
+import { useParams, useNavigate, Link } from "react-router-dom";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { createProductReview, getProudct } from "../api/productsApi";
 import Loading from "../components/Loading";
 import { useDispatch, useSelector } from "react-redux";
 import { setProductDetails } from "../features/products/productsSlice";
 import Message from "../components/LoadingError/Error";
 import Footer from "../components/Footer";
-// import { Link } from "react-router-dom";
-// import Rating from "../components/homeComponents/Rating";
-// import Message from "./../components/LoadingError/Error";
-// import products from "../data/Products";
+import Rating from "../components/homeComponents/Rating";
+import moment from "moment";
+import "moment/locale/es"; // Importa el idioma español de Moment.js
 
 const SingleProduct = ({ match }) => {
-  window.scrollTo(0, 0);
+  const queryClient = useQueryClient();
   const dispatch = useDispatch();
   const { id } = useParams();
   const navigate = useNavigate();
   const [qty, setQty] = useState(1);
+  const userInfo = useSelector((state) => state.user);
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState("");
   // const [showError, setshowError] = useState(false);
+
+  const {
+    mutate,
+    data: res,
+    isLoading: loadingCreateReview,
+    error: errorCreateReview,
+  } = useMutation(["createProductReview"], () =>
+    createProductReview(id, { rating, comment })
+  );
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   // Ejecutamos la llamada a la API, react-query nos ayuda con el estado de la petición
   const { isLoading, data, isError, error } = useQuery(["product", id], () =>
@@ -41,6 +56,17 @@ const SingleProduct = ({ match }) => {
   const handleGoBack = () => {
     navigate(-1);
   };
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    mutate(id, { rating, comment });
+  };
+
+  useEffect(() => {
+    queryClient.invalidateQueries(["product", id]);
+    setRating("");
+    setComment("");
+  }, [res]);
 
   const product = data;
 
@@ -128,56 +154,80 @@ const SingleProduct = ({ match }) => {
             {/* RATING */}
             <div className="row my-5">
               <div className="col-md-6">
-                <h6 className="mb-3">REVIEWS</h6>
-                {/* <Message variant={"alert-info mt-3"}>No Reviews</Message> */}
-                <div className="mb-5 mb-md-3 bg-light p-3 shadow-sm rounded">
-                  <strong>Admin Doe</strong>
-                  {/* <Rating /> */}
-                  <span>Jan 12 2021</span>
-                  <div className="alert alert-info mt-3">
-                    Lorem Ipsum is simply dummy text of the printing and
-                    typesetting industry. Lorem Ipsum has been the industry's.
+                <h6 className="mb-3">RESEÑAS</h6>
+                {product.reviews.length === 0 && (
+                  <Message variant={"alert-info mt-3"}>Sin Reseñas</Message>
+                )}
+                {product.reviews.map((review) => (
+                  <div
+                    key={review._id}
+                    className="mb-5 mb-md-3 bg-light p-3 shadow-sm rounded"
+                  >
+                    <strong>{review.name}</strong>
+                    <Rating value={review.rating} />
+                    <span>{moment(review.createdAt).calendar()}</span>
+                    <div className="alert alert-info mt-3">
+                      {review.comment}
+                    </div>
                   </div>
-                </div>
+                ))}
               </div>
               <div className="col-md-6">
-                <h6>WRITE A CUSTOMER REVIEW</h6>
-                <div className="my-4"></div>
-
-                <form>
-                  <div className="my-4">
-                    <strong>Rating</strong>
-                    <select className="col-12 bg-light p-3 mt-2 border-0 rounded">
-                      <option value="">Select...</option>
-                      <option value="1">1 - Poor</option>
-                      <option value="2">2 - Fair</option>
-                      <option value="3">3 - Good</option>
-                      <option value="4">4 - Very Good</option>
-                      <option value="5">5 - Excellent</option>
-                    </select>
-                  </div>
-                  <div className="my-4">
-                    <strong>Comment</strong>
-                    <textarea
-                      row="3"
-                      className="col-12 bg-light p-3 mt-2 border-0 rounded"
-                    ></textarea>
-                  </div>
-                  <div className="my-3">
-                    <button className="col-12 bg-black border-0 p-3 rounded text-white">
-                      SUBMIT
-                    </button>
-                  </div>
-                </form>
-                <div className="my-3">
-                  {/* <Message variant={"alert-warning"}>
-                Please{" "}
-                <Link to="/login">
-                  " <strong>Login</strong> "
-                </Link>{" "}
-                to write a review{" "}
-              </Message> */}
+                <h6>ESCRIBE UNA OPINIÓN SOBRE EL PRODUCTO </h6>
+                <div className="my-4">
+                  {loadingCreateReview && <Loading />}
+                  {errorCreateReview && (
+                    <Message variant="alert-danger">
+                      {errorCreateReview.response.data.message}
+                    </Message>
+                  )}
                 </div>
+                {userInfo?.token ? (
+                  <form onSubmit={submitHandler}>
+                    <div className="my-4">
+                      <strong>Califica</strong>
+                      <select
+                        value={rating}
+                        onChange={(e) => setRating(e.target.value)}
+                        className="col-12 bg-light p-3 mt-2 border-0 rounded"
+                      >
+                        <option value="">Selecciona...</option>
+                        <option value="1">1 - Pobre</option>
+                        <option value="2">2 - Justo</option>
+                        <option value="3">3 - Bueno</option>
+                        <option value="4">4 - Muy Bueno</option>
+                        <option value="5">5 - Excelente</option>
+                      </select>
+                    </div>
+                    <div className="my-4">
+                      <strong>Comentario</strong>
+                      <textarea
+                        row="3"
+                        value={comment}
+                        onChange={(e) => setComment(e.target.value)}
+                        className="col-12 bg-light p-3 mt-2 border-0 rounded"
+                      ></textarea>
+                    </div>
+                    <div className="my-3">
+                      <button
+                        disabled={loadingCreateReview}
+                        className="col-12 bg-black border-0 p-3 rounded text-white"
+                      >
+                        SUBMIT
+                      </button>
+                    </div>
+                  </form>
+                ) : (
+                  <div className="my-3">
+                    <Message variant={"alert-warning"}>
+                      Por favor
+                      <Link to="/login">
+                        " <strong>Login</strong> "
+                      </Link>
+                      para escribir un comentario
+                    </Message>
+                  </div>
+                )}
               </div>
             </div>
           </div>
