@@ -128,7 +128,7 @@ const PlaceOrderScreen = () => {
           </div> */}
         </div>
 
-        <div className="row order-products justify-content-between">
+        <div className="row order-products justify-content-between mb-5">
           <div className="col-lg-8">
             {cart.cartItems.length === 0 ? (
               <Message variant="alert-info mt-5">Tu carrito esta vacío</Message>

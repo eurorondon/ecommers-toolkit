@@ -10,10 +10,10 @@ import Footer from "../components/Footer";
 
 // import { PayPalButton } from "react-paypal-button-v2";
 
-const OrderScreen = () => {
+const PaidScreen = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  // window.scrollTo(0, 0);
+  window.scrollTo(0, 0);
   const [image, setImage] = useState([]);
   const { email } = useSelector((state) => state.user);
   const [comprobantePago, setComprobantePago] = useState(null);
@@ -63,11 +63,26 @@ const OrderScreen = () => {
     }
   }, [data]);
 
-  // const isUploading = true;
-
   return (
     <>
       <Header />
+
+      <div
+        className="d-flex flex-column justify-content-center my-5"
+        style={{ width: "100%" }}
+      >
+        <h3 className="mx-5 text-center">
+          Tu comprobante ha sido cargado con exito, procederemos a verificarlo
+        </h3>
+
+        <button
+          className="btn text-white mx-auto my-4  "
+          style={{ backgroundColor: "#1cb803" }}
+        >
+          ir a Whatsapp
+        </button>
+        <p className="text-center mx-3">si tienes dudas puedes escribirnos</p>
+      </div>
 
       <div className="container">
         <div className="row  order-detail">
@@ -89,6 +104,7 @@ const OrderScreen = () => {
               </div>
             </div>
           </div>
+
           {/* 2 */}
           {/* <div className="col-lg-4 col-sm-4 mb-lg-4 mb-5 mb-sm-0">
             <div className="row">
@@ -139,7 +155,7 @@ const OrderScreen = () => {
       </div>
 
       {/* Tabla de order de productos */}
-      <div className="row order-products justify-content-between  container mx-auto ">
+      <div className="row order-products justify-content-between  container mx-auto mb-5 ">
         <div className="col-lg-8  ">
           {order?.orderItems ? (
             <>
@@ -201,38 +217,6 @@ const OrderScreen = () => {
                 </tr>
               </tbody>
             </table>
-
-            {comprobantePago || order.comprobantePago ? (
-              <div className="my-1 mx-auto">
-                <p>Tu comprobante ha sido cargado con exito</p>
-
-                <button>ir a Whatsapp</button>
-              </div>
-            ) : isUploading ? (
-              <>
-                <div className="py-5  " style={{ width: "100%" }}>
-                  <Loading className="py-5" />
-                </div>
-              </>
-            ) : (
-              <div className="">
-                <form
-                  action=""
-                  style={{ maxWidth: "250px" }}
-                  onSubmit={submitHandler}
-                >
-                  <input
-                    className="form-control mt-3"
-                    type="file"
-                    name="image"
-                    multiple
-                    required
-                    onChange={(e) => setImage(e.target.files[0])}
-                  />
-                  <button>Subir Comprobante</button>
-                </form>
-              </div>
-            )}
           </div>
         )}
       </div>
@@ -241,4 +225,4 @@ const OrderScreen = () => {
   );
 };
 
-export default OrderScreen;
+export default PaidScreen;
