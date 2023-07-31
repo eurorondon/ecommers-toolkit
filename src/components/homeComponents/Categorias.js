@@ -65,6 +65,7 @@ const Categorias = () => {
           justifyContent: "center",
           backgroundColor: "#D8EAF2",
         }}
+        id="categorias"
       >
         {categories.map((category, index) => (
           <div key={index} style={{ margin: "10px", textAlign: "center" }}>
@@ -103,6 +104,7 @@ const Categorias = () => {
             justifyContent: "center",
             backgroundColor: "#D8EAF2",
           }}
+          id="categorias"
         >
           {categories.slice(0, 5).map((category, index) => (
             <div key={index} style={{ margin: "10px", textAlign: "center" }}>
@@ -166,7 +168,11 @@ const Categorias = () => {
     );
   if (window.innerWidth < 769)
     return (
-      <div className="my-4 py-3" style={{ backgroundColor: "#D8EAF2" }}>
+      <div
+        className="my-4 py-3"
+        style={{ backgroundColor: "#D8EAF2" }}
+        id="categorias"
+      >
         <div
           style={{
             display: "flex",

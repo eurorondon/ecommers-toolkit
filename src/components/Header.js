@@ -38,6 +38,7 @@ const Header = () => {
     } else {
       navigate("/");
     }
+    setKeyword("");
     // dispatch(setSearch(keyword));
   };
 
@@ -96,7 +97,7 @@ const Header = () => {
                       anchor="left"
                       onClose={() => setOpen(false)}
                     >
-                      <NavListDrawer />
+                      <NavListDrawer setOpen={setOpen} />
                     </Drawer>
                   </div>
                   <Link className="navbar-brand ms-3" to="/">
@@ -183,7 +184,8 @@ const Header = () => {
                       type="search"
                       className="form-control rounded-left search"
                       placeholder="Search"
-                      onChange={(e) => setKeyword(e.target.value)}
+                      value={keyword} // Asignar el valor del estado "keyword" al campo
+                      onChange={(e) => setKeyword(e.target.value)} // Actualizar el estado "keyword" cuando cambie el valor del campo
                     />
                     <button type="submit" className="search-button ">
                       search
@@ -208,7 +210,8 @@ const Header = () => {
                     type="search"
                     className="form-control rounded-left search"
                     placeholder="Search"
-                    onChange={(e) => setKeyword(e.target.value)}
+                    value={keyword} // Asignar el valor del estado "keyword" al campo
+                    onChange={(e) => setKeyword(e.target.value)} // Actualizar el estado "keyword" cuando cambie el valor del campo
                   />
                   <button
                     type="submit"
@@ -273,9 +276,18 @@ const Header = () => {
         style={{ backgroundColor: "#1A2339" }}
       >
         <div className="container d-flex justify-content-start gap-5">
-          <h5>Categorias</h5>
-          <h5>Contacto</h5>
-          <h5>Top Seller</h5>
+          <Link to="/" className="text-white">
+            Home
+          </Link>
+          <Link to="/categorias" className="text-white">
+            Categorias
+          </Link>
+          <Link to="/misordenes" className="text-white">
+            Mis ordenes
+          </Link>
+          <Link to="/miperfil" className="text-white">
+            Mi perfil
+          </Link>
         </div>
       </div>
     </div>

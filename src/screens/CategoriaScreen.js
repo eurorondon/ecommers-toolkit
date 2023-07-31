@@ -13,7 +13,7 @@ import NavListDrawer from "../components/Navbar/NavListDrawer";
 
 // import GridProductList from "../components/homeComponents/GridProductList";
 
-const Home = () => {
+const CategoriaScreen = () => {
   const { isLoading } = useSelector((state) => state.products);
 
   useEffect(() => {
@@ -26,7 +26,6 @@ const Home = () => {
       style={{ backgroundColor: "#d8eaf2", height: " 100%" }}
     >
       <Header />
-      <Portada />
       <Categorias />
       <NewProducts />
       <Ofertas />
@@ -38,4 +37,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default CategoriaScreen;

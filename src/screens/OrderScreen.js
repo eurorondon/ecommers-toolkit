@@ -13,7 +13,7 @@ import Footer from "../components/Footer";
 const OrderScreen = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  // window.scrollTo(0, 0);
+
   const [image, setImage] = useState([]);
   const { email } = useSelector((state) => state.user);
   const [comprobantePago, setComprobantePago] = useState(null);
@@ -21,6 +21,10 @@ const OrderScreen = () => {
   const { id } = useParams();
   const orderId = id;
   const userLogin = useSelector((state) => state.userLogin);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const {
     isLoading,

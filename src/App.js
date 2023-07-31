@@ -27,6 +27,9 @@ import SearchResults from "./screens/SearchResults";
 import CategoriesResult from "./screens/CategoriesResults";
 import ProfileScreen from "./screens/ProfileScreen";
 import PaidScreen from "./screens/PaidScreen";
+import MisOrdenesScreen from "./screens/MisOrdenesScreen";
+import MiperfilScreen from "./screens/MiperfilScreen";
+import CategoriaScreen from "./screens/CategoriaScreen";
 
 Amplify.configure(awsExports);
 
@@ -49,6 +52,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/categorias" element={<CategoriaScreen />} />
         <Route path="/products/:id" element={<SingleProduct />} />
         <Route
           path="/profile"
@@ -85,6 +89,22 @@ function App() {
           element={
             <PrivateRouter>
               <PaidScreen />
+            </PrivateRouter>
+          }
+        />
+        <Route
+          path="/misordenes"
+          element={
+            <PrivateRouter>
+              <MisOrdenesScreen />
+            </PrivateRouter>
+          }
+        />
+        <Route
+          path="/miperfil"
+          element={
+            <PrivateRouter>
+              <MiperfilScreen />
             </PrivateRouter>
           }
         />

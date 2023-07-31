@@ -7,6 +7,7 @@ const initialState = {
   page: 0,
   productDetails: [],
   search: "",
+  open: "false",
 };
 
 const productsSlice = createSlice({
@@ -34,6 +35,10 @@ const productsSlice = createSlice({
     setSearch: (state, action) => {
       state.search = action.payload;
     },
+
+    setOpen: (state, action) => {
+      state.open = action.payload;
+    },
   },
 });
 
@@ -43,5 +48,6 @@ export const {
   setPage,
   setProductDetails,
   setSearch,
+  setOpen,
 } = productsSlice.actions;
 export default productsSlice.reducer;
